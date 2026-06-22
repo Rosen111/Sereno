@@ -1,0 +1,251 @@
+{%- style -%}
+  .serena-tl-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    background: {{ section.settings.bg_color }};
+  }
+  @media screen and (min-width: 750px) {
+    .serena-tl-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="serena-tl-{{ section.id }}">
+  <div class="page-width">
+
+    {%- if section.settings.heading != blank -%}
+      <div class="serena-tl__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="serena-tl__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="serena-tl__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="serena-tl__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign phase_blocks = section.blocks | where: 'type', 'phase' -%}
+
+    <!-- DESKTOP TIMELINE -->
+    <div class="serena-tl__desktop">
+      <!-- Labels row -->
+      <div class="serena-tl__labels" style="grid-template-columns: repeat({{ phase_blocks.size }}, 1fr);">
+        {%- for block in phase_blocks -%}
+          <div class="serena-tl__label-item" {{ block.shopify_attributes }}>
+            <span class="serena-tl__phase-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+      <!-- Line + Dots row -->
+      <div class="serena-tl__line-row" style="grid-template-columns: repeat({{ phase_blocks.size }}, 1fr);">
+        {%- for block in phase_blocks -%}
+          <div class="serena-tl__dot-col">
+            <div class="serena-tl__dot{% if forloop.first %} serena-tl__dot--first{% endif %}{% if forloop.last %} serena-tl__dot--last{% endif %}"></div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <!-- Cards row -->
+      <div class="serena-tl__cards" style="grid-template-columns: repeat({{ phase_blocks.size }}, 1fr);">
+        {%- for block in phase_blocks -%}
+          <div class="serena-tl__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="serena-tl__card-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <h3 class="serena-tl__card-heading">{{ block.settings.heading }}</h3>
+            <p class="serena-tl__card-body">{{ block.settings.body }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- MOBILE TIMELINE -->
+    <div class="serena-tl__mobile">
+      {%- for block in phase_blocks -%}
+        <div class="serena-tl__mobile-item" {{ block.shopify_attributes }}>
+          <div class="serena-tl__mobile-left">
+            <div class="serena-tl__mobile-dot"></div>
+            {%- unless forloop.last -%}
+              <div class="serena-tl__mobile-line"></div>
+            {%- endunless -%}
+          </div>
+          <div class="serena-tl__mobile-content">
+            <span class="serena-tl__phase-label">{{ block.settings.label }}</span>
+            {%- if block.settings.icon != blank -%}
+              <span class="serena-tl__card-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <h3 class="serena-tl__card-heading">{{ block.settings.heading }}</h3>
+            <p class="serena-tl__card-body">{{ block.settings.body }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- assign badge_blocks = section.blocks | where: 'type', 'badge' -%}
+    {%- if badge_blocks.size > 0 -%}
+      <div class="serena-tl__badges">
+        {%- for block in badge_blocks -%}
+          <div class="serena-tl__badge" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="serena-tl__badge-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <span class="serena-tl__badge-text">{{ block.settings.text }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+.serena-tl__header { text-align: center; margin-bottom: 48px; }
+.serena-tl__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C4622D; margin: 0 0 8px; }
+.serena-tl__heading { font-size: 28px; font-weight: 700; color: #1a1a1a; margin: 0 0 10px; }
+.serena-tl__subheading { font-size: 14px; color: #888; margin: 0; }
+
+/* DESKTOP */
+.serena-tl__desktop { display: none; }
+@media screen and (min-width: 750px) {
+  .serena-tl__desktop { display: block; }
+  .serena-tl__mobile { display: none; }
+  .serena-tl__labels { display: grid; text-align: center; margin-bottom: 14px; }
+  .serena-tl__phase-label { font-size: 13px; font-weight: 700; color: #C4622D; }
+  .serena-tl__line-row {
+    display: grid;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .serena-tl__line-row::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: calc(100% / (var(--cols) * 2));
+    right: calc(100% / (var(--cols) * 2));
+    height: 2px;
+    background: #C4622D;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+  .serena-tl__dot-col { display: flex; justify-content: center; align-items: center; position: relative; z-index: 1; }
+  .serena-tl__dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #C4622D;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #C4622D;
+    position: relative; z-index: 1;
+    transition: transform 0.3s ease;
+  }
+  .serena-tl__dot:hover { transform: scale(1.3); }
+  .serena-tl__cards { display: grid; gap: 16px; }
+  .serena-tl__card {
+    background: #FDF6F0;
+    border: 1.5px solid #E8D5C4;
+    border-radius: 16px;
+    padding: 22px 18px;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .serena-tl__card:hover {
+    box-shadow: 0 8px 24px rgba(196,98,45,0.15);
+    transform: translateY(-3px);
+  }
+}
+.serena-tl__card-icon { font-size: 28px; display: block; margin-bottom: 10px; }
+.serena-tl__card-heading { font-size: 15px; font-weight: 700; color: #1a1a1a; margin: 0 0 8px; }
+.serena-tl__card-body { font-size: 13px; color: #666; margin: 0; line-height: 1.6; }
+
+/* MOBILE */
+.serena-tl__mobile { display: block; }
+.serena-tl__mobile-item { display: flex; gap: 16px; margin-bottom: 8px; }
+.serena-tl__mobile-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.serena-tl__mobile-dot { width: 16px; height: 16px; border-radius: 50%; background: #C4622D; border: 2px solid #fff; box-shadow: 0 0 0 2px #C4622D; flex-shrink: 0; }
+.serena-tl__mobile-line { width: 2px; background: #E8D5C4; flex: 1; min-height: 30px; margin: 6px 0; }
+.serena-tl__mobile-content { padding-bottom: 24px; flex: 1; }
+.serena-tl__mobile-content .serena-tl__phase-label { display: block; font-size: 12px; font-weight: 700; color: #C4622D; margin-bottom: 4px; }
+.serena-tl__mobile-content .serena-tl__card-icon { text-align: left; font-size: 22px; }
+.serena-tl__mobile-content .serena-tl__card-heading { text-align: left; font-size: 14px; }
+.serena-tl__mobile-content .serena-tl__card-body { text-align: left; }
+
+/* BADGES */
+.serena-tl__badges {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 12px; margin-top: 48px;
+  padding: 20px; background: #FDF6F0;
+  border: 1px solid #E8D5C4; border-radius: 14px;
+}
+.serena-tl__badge { display: flex; align-items: center; gap: 8px; }
+.serena-tl__badge-icon { font-size: 18px; }
+.serena-tl__badge-text { font-size: 13px; font-weight: 600; color: #333; }
+</style>
+
+<script>
+(function(){
+  var tl = document.querySelector('.serena-tl-{{ section.id }}');
+  if (!tl) return;
+  var cards = tl.querySelectorAll('.serena-tl__card, .serena-tl__mobile-item');
+  var dots = tl.querySelectorAll('.serena-tl__dot, .serena-tl__mobile-dot');
+  cards.forEach(function(c){ c.style.opacity='0'; c.style.transform='translateY(20px)'; });
+  dots.forEach(function(d){ d.style.transform='scale(0)'; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        dots.forEach(function(d,i){ setTimeout(function(){ d.style.transition='transform 0.4s ease'; d.style.transform='scale(1)'; },i*150); });
+        cards.forEach(function(c,i){ setTimeout(function(){ c.style.transition='opacity 0.5s ease, transform 0.5s ease'; c.style.opacity='1'; c.style.transform='translateY(0)'; },300+i*150); });
+        io.disconnect();
+      }
+    });
+  },{threshold:0.2});
+  io.observe(tl);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Serena — Timeline",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Клинично потвърдени резултати"},
+    {"type":"text","id":"heading","label":"Заглавие","default":"КАКВО СЕ СЛУЧВА С ТЯЛОТО ТИ?"},
+    {"type":"text","id":"subheading","label":"Подзаглавие"},
+    {"type":"color","id":"bg_color","label":"Фон","default":"#ffffff"},
+    {"type":"range","id":"padding_top","min":0,"max":100,"step":4,"unit":"px","label":"Отстъп отгоре","default":60},
+    {"type":"range","id":"padding_bottom","min":0,"max":100,"step":4,"unit":"px","label":"Отстъп отдолу","default":60}
+  ],
+  "blocks": [
+    {
+      "type": "phase",
+      "name": "Фаза",
+      "settings": [
+        {"type":"text","id":"label","label":"Период","default":"Седмица 1–2"},
+        {"type":"text","id":"icon","label":"Иконка (emoji)","default":"🌙"},
+        {"type":"text","id":"heading","label":"Заглавие","default":"Тялото се настройва"},
+        {"type":"textarea","id":"body","label":"Описание","default":"Магнезийт и B6 подготвят нервната система. Сънът се подобрява. Усещаш лека разлика в настроението."}
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Бадж доверие",
+      "settings": [
+        {"type":"text","id":"icon","label":"Иконка","default":"🔬"},
+        {"type":"text","id":"text","label":"Текст","default":"13 клинично изследвани съставки"}
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Serena — Timeline",
+    "blocks": [
+      {"type":"phase","settings":{"label":"Седмица 1–2","icon":"🌙","heading":"Тялото се настройва","body":"Магнезийт и B6 подготвят нервната система. Сънът се подобрява. Усещаш лека разлика в настроението."}},
+      {"type":"phase","settings":{"label":"Седмица 3–4","icon":"🌡️","heading":"Първата видима разлика","body":"Горещите вълни стават по-редки. Енергията се повишава. По-малко раздразнителност."}},
+      {"type":"phase","settings":{"label":"Месец 2","icon":"✨","heading":"Тялото се балансира","body":"Значително намаляване на симптомите. Нощното изпотяване намалява. Настроението — по-стабилно."}},
+      {"type":"phase","settings":{"label":"Месец 3+","icon":"🌸","heading":"Дълготрайна подкрепа","body":"Трайно хормонално равновесие. По-добра костна плътност (D3+K2). Кожата и косата — по-жизнени."}},
+      {"type":"badge","settings":{"icon":"🔬","text":"13 клинично изследвани съставки"}},
+      {"type":"badge","settings":{"icon":"✅","text":"EFSA одобрени претенции"}},
+      {"type":"badge","settings":{"icon":"🛡️","text":"Регистрирано в БАБХ"}}
+    ]
+  }]
+}
+{% endschema %}

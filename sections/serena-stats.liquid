@@ -1,0 +1,398 @@
+{%- style -%}
+  .serena-stats-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .serena-stats-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .serena-stats__img-{{ section.id }} {
+    aspect-ratio: {% if section.settings.image_ratio == 'square' %}1/1{% elsif section.settings.image_ratio == 'portrait' %}3/4{% else %}4/5{% endif %};
+  }
+{%- endstyle -%}
+
+<div class="serena-stats-section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="serena-stats__grid{% if section.settings.image_position == 'right' %} serena-stats__grid--reverse{% endif %}">
+
+      <div class="serena-stats__image-col">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              class: 'serena-stats__img serena-stats__img-' | append: section.id,
+              widths: '300, 400, 500, 600, 800, 900'
+          }}
+        {%- else -%}
+          <div class="serena-stats__img serena-stats__img-{{ section.id }} serena-stats__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="serena-stats__content-col">
+        <div class="serena-stats__box">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="serena-stats__eyebrow">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="serena-stats__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="serena-stats__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+
+          <div class="serena-stats__bars">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'stat' -%}
+                <div class="serena-stat-item" {{ block.shopify_attributes }}>
+                  <div class="serena-stat__header">
+                    <span class="serena-stat__label">{{ block.settings.label }}</span>
+                    <span class="serena-stat__percent">{{ block.settings.percentage }}%</span>
+                  </div>
+                  <div class="serena-stat__bar">
+                    <div class="serena-stat__fill" data-width="{{ block.settings.percentage }}"></div>
+                  </div>
+                  {%- if block.settings.description != blank -%}
+                    <p class="serena-stat__desc">{{ block.settings.description }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if section.settings.note != blank -%}
+            <p class="serena-stats__note">{{ section.settings.note }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .serena-stats__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  @media screen and (min-width: 750px) {
+    .serena-stats__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 52px;
+    }
+    .serena-stats__grid--reverse .serena-stats__image-col { order: 2; }
+    .serena-stats__grid--reverse .serena-stats__content-col { order: 1; }
+  }
+  .serena-stats__img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+  }
+  .serena-stats__placeholder {
+    background: #F5EBE0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    min-height: 300px;
+  }
+  .serena-stats__placeholder svg { width: 60px; opacity: 0.3; }
+  .serena-stats__box {
+    background: linear-gradient(145deg, #FDF6F0 0%, #F5EBE0 100%);
+    border: 1.5px solid #E8D5C4;
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+  }
+  .serena-stats__box::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgba(232, 213, 196, 0.5);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+  .serena-stats__eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C4622D;
+    margin: 0 0 8px;
+  }
+  .serena-stats__heading {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+  .serena-stats__subheading {
+    font-size: 12px;
+    color: #999;
+    margin: 0 0 26px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .serena-stats__bars { display: flex; flex-direction: column; gap: 0; }
+  .serena-stat-item { margin-bottom: 20px; }
+  .serena-stat-item:last-of-type { margin-bottom: 0; }
+  .serena-stat__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .serena-stat__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    letter-spacing: 0.01em;
+  }
+  .serena-stat__percent {
+    font-size: 28px;
+    font-weight: 900;
+    color: #C4622D;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .serena-stat__bar {
+    background: rgba(196, 98, 45, 0.12);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .serena-stat__fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #E8957A 0%, #C4622D 100%);
+    width: 0;
+    transition: width 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .serena-stat__desc {
+    font-size: 11px;
+    color: #aaa;
+    margin: 5px 0 0;
+    line-height: 1.5;
+  }
+  .serena-stats__note {
+    font-size: 11px;
+    color: #bbb;
+    margin: 20px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid #E8D5C4;
+    font-style: italic;
+    line-height: 1.5;
+  }
+</style>
+
+<script>
+  (function() {
+    var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+    if (!sectionEl) return;
+    var fills = sectionEl.querySelectorAll('.serena-stat__fill[data-width]');
+    if (!fills.length) return;
+    var done = false;
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !done) {
+          done = true;
+          fills.forEach(function(fill, i) {
+            setTimeout(function() {
+              fill.style.width = fill.getAttribute('data-width') + '%';
+            }, i * 180);
+          });
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(sectionEl);
+
+    if (Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function(e) {
+        if (e.detail.sectionId === '{{ section.id }}') {
+          fills.forEach(function(fill) {
+            fill.style.width = fill.getAttribute('data-width') + '%';
+          });
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Serena — Статистики",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Снимка"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Снимка"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Позиция на снимката",
+      "options": [
+        { "value": "left", "label": "Вляво" },
+        { "value": "right", "label": "Вдясно" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Пропорции на снимката",
+      "options": [
+        { "value": "portrait", "label": "Портрет 3:4 (препоръчително)" },
+        { "value": "square", "label": "Квадрат 1:1" },
+        { "value": "auto", "label": "Автоматично" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "header",
+      "content": "📊 Текст"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow текст (над заглавието)",
+      "default": "Клинично проследяване"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Заглавие",
+      "default": "РЕЗУЛТАТИ СЛЕД 8 СЕДМИЦИ"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Подзаглавие",
+      "default": "Независимо клинично проследяване · Жени 40–65 г."
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Бележка в дъното (незадължителна)",
+      "info": "Напр. BABB декларация, допълнителна информация"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Изглед"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Цветова схема",
+      "options": [
+        { "value": "background-1", "label": "Бял (по подразбиране)" },
+        { "value": "background-2", "label": "Светло сиво" },
+        { "value": "inverse", "label": "Тъмно" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Отстъп отгоре",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Отстъп отдолу",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "📊 Статистика",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Название",
+          "default": "Горещи вълни"
+        },
+        {
+          "type": "range",
+          "id": "percentage",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Процент",
+          "default": 82
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Описание (1 ред)",
+          "default": "усещат значително намаляване"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena — Статистики",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "label": "🌡️ Горещи вълни и зачервяване",
+            "percentage": 82,
+            "description": "усещат значително намаляване на горещите пристъпи"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "label": "🌙 Качество на съня",
+            "percentage": 86,
+            "description": "спят по-дълбоко и по-спокойно в повечето нощи"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "label": "✨ Общо самочувствие",
+            "percentage": 80,
+            "description": "отчитат по-стабилно настроение и повече енергия"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
