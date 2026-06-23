@@ -1,0 +1,87 @@
+{%- comment -%} Serena Meno · 8. Reviews / social proof (safe placeholders) {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-rev-{{ section.id }}"
+  class="serena-sec serena-rev"
+  style="--bg: {{ s.bg_color }}; --star: {{ s.star_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-rev__head">
+      {%- if s.show_stars -%}<span class="serena-rev__stars">★★★★★</span>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.subheading != blank -%}<div class="serena-rev__sub">{{ s.subheading }}</div>{%- endif -%}
+    </div>
+    <div class="serena-rev__grid">
+      {%- for block in section.blocks -%}
+        <div class="serena-rev__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.show_stars -%}<div class="serena-rev__cardstars">★★★★★</div>{%- endif -%}
+          {%- if block.settings.quote != blank -%}<p class="serena-rev__q">„{{ block.settings.quote }}”</p>{%- endif -%}
+          {%- if block.settings.author != blank -%}<div class="serena-rev__a">{{ block.settings.author }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if s.footnote != blank -%}<div class="serena-rev__note">{{ s.footnote }}</div>{%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  #serena-rev-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-rev-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-rev-{{ section.id }} .serena-rev__head { text-align: center; margin: 0 auto 44px; }
+  #serena-rev-{{ section.id }} .serena-rev__stars { color: var(--star); font-size: 15px; letter-spacing: .14em; }
+  #serena-rev-{{ section.id }} .serena-h2 { margin: 14px 0 2px; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; color: #2C211B; }
+  #serena-rev-{{ section.id }} .serena-rev__sub { font-size: 13.5px; color: #8A6A63; }
+  #serena-rev-{{ section.id }} .serena-rev__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 920px; margin: 0 auto; }
+  #serena-rev-{{ section.id }} .serena-rev__card { background: #FCF7F4; border: 1px solid #EAD8D2; border-radius: 18px; padding: 28px 26px; }
+  #serena-rev-{{ section.id }} .serena-rev__cardstars { color: var(--star); font-size: 12px; letter-spacing: .12em; }
+  #serena-rev-{{ section.id }} .serena-rev__q { margin: 14px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 21px; line-height: 1.5; color: #4A3829; }
+  #serena-rev-{{ section.id }} .serena-rev__a { margin-top: 16px; font-size: 13px; font-weight: 700; color: #8A6A63; }
+  #serena-rev-{{ section.id }} .serena-rev__note { text-align: center; margin-top: 24px; font-size: 12px; color: #A08079; }
+  @media (max-width: 749px) {
+    #serena-rev-{{ section.id }} { padding: 56px 0; }
+    #serena-rev-{{ section.id }} .serena-h2 { font-size: 28px; }
+    #serena-rev-{{ section.id }} .serena-rev__grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Отзиви",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F4E6E2" },
+    { "type": "color", "id": "star_color", "label": "Цвят на звездите", "default": "#C98A4B" },
+    { "type": "checkbox", "id": "show_stars", "label": "Покажи звезди в заглавието", "default": true },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Думи на жени като теб" },
+    { "type": "text", "id": "subheading", "label": "Подзаглавие", "default": "Отзиви от клиенти" },
+    { "type": "text", "id": "footnote", "label": "Бележка отдолу", "default": "Примерни отзиви — замени с реални след тестови клиенти." },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Отзив",
+      "settings": [
+        { "type": "checkbox", "id": "show_stars", "label": "Покажи звезди", "default": true },
+        { "type": "textarea", "id": "quote", "label": "Отзив", "default": "Не очаквах чудо, но след няколко седмици започнах да се чувствам по-спокойна вечер." },
+        { "type": "text", "id": "author", "label": "Име · възраст", "default": "Албена · 51 г." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Отзиви",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "Не очаквах чудо, но след няколко седмици започнах да се чувствам по-спокойна вечер.", "author": "Албена · 51 г." } },
+        { "type": "review", "settings": { "quote": "Харесва ми, че е лесно да го включа в ежедневието си. Стана част от сутрешната ми рутина.", "author": "Веселина · 48 г." } },
+        { "type": "review", "settings": { "quote": "Най-много усетих разлика в това, че започнах да обръщам повече внимание на тялото си.", "author": "Радостина · 54 г." } },
+        { "type": "review", "settings": { "quote": "Приятно е да имам нещо, създадено специално за този период от живота ми.", "author": "Маргарита · 56 г." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- comment -%} Serena Meno · 5. Daily ritual {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-ritual-{{ section.id }}"
+  class="serena-sec serena-ritual"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --num: {{ s.number_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-head">
+      {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="serena-ritual__grid">
+      {%- for block in section.blocks -%}
+        <div class="serena-ritual__card" {{ block.shopify_attributes }}>
+          <div class="serena-ritual__num">{{ block.settings.number }}</div>
+          {%- if block.settings.title != blank -%}<div class="serena-ritual__t">{{ block.settings.title }}</div>{%- endif -%}
+          {%- if block.settings.text != blank -%}<div class="serena-ritual__d">{{ block.settings.text }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if s.footnote != blank -%}<div class="serena-ritual__note">{{ s.footnote }}</div>{%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  #serena-ritual-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-ritual-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-ritual-{{ section.id }} .serena-head { text-align: center; max-width: 640px; margin: 0 auto 46px; }
+  #serena-ritual-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-ritual-{{ section.id }} .serena-h2 { margin: 14px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; line-height: 1.18; color: #2C211B; }
+  #serena-ritual-{{ section.id }} .serena-ritual__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  #serena-ritual-{{ section.id }} .serena-ritual__card { background: #F7F4EA; border: 1px solid #DEDDC9; border-radius: 20px; padding: 34px 28px; text-align: center; }
+  #serena-ritual-{{ section.id }} .serena-ritual__num { width: 62px; height: 62px; border-radius: 50%; border: 1.5px solid #B9BFA3; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-family: Marcellus, serif; font-size: 22px; color: var(--num); }
+  #serena-ritual-{{ section.id }} .serena-ritual__t { margin-top: 20px; font-weight: 800; font-size: 16px; line-height: 1.3; color: #2C211B; }
+  #serena-ritual-{{ section.id }} .serena-ritual__d { margin-top: 10px; font-size: 13.5px; line-height: 1.6; color: #6F6353; }
+  #serena-ritual-{{ section.id }} .serena-ritual__note { text-align: center; margin-top: 30px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: #5C6A48; }
+  @media (max-width: 749px) {
+    #serena-ritual-{{ section.id }} { padding: 56px 0; }
+    #serena-ritual-{{ section.id }} .serena-head { margin-bottom: 30px; }
+    #serena-ritual-{{ section.id }} .serena-h2 { font-size: 28px; }
+    #serena-ritual-{{ section.id }} .serena-ritual__grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Ритуал",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#EAEADD" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#74805F" },
+    { "type": "color", "id": "number_color", "label": "Цвят на номерата", "default": "#74805F" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Дневен ритуал" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Една малка рутина за повече спокойствие всеки ден" },
+    { "type": "text", "id": "footnote", "label": "Бележка отдолу", "default": "Без обещания за мигновени резултати — само нежна, постоянна грижа." },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Стъпка",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Номер", "default": "01" },
+        { "type": "text", "id": "title", "label": "Заглавие", "default": "Приемай Serena Meno всеки ден" },
+        { "type": "textarea", "id": "text", "label": "Описание", "default": "Две капсули с вода — превърни го в спокоен ежедневен момент за себе си." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Ритуал",
+      "blocks": [
+        { "type": "step", "settings": { "number": "01", "title": "Приемай 2 капсули дневно", "text": "Най-добре след закуска или след най-голямото хранене — превърни го в спокоен момент за себе си." } },
+        { "type": "step", "settings": { "number": "02", "title": "Комбинирай със здравословна рутина", "text": "Вода, движение, сън и спокойни моменти подкрепят ежедневния ти баланс." } },
+        { "type": "step", "settings": { "number": "03", "title": "Дай време на тялото си", "text": "Промените идват постепенно. Постоянството е по-важно от бързината." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

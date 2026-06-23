@@ -1,0 +1,92 @@
+{%- comment -%} Serena Meno · 1. Emotional problem section {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- liquid
+  assign s = section.settings
+-%}
+<div
+  id="serena-problem-{{ section.id }}"
+  class="serena-sec serena-problem"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap serena-problem__grid">
+    <div class="serena-problem__text">
+      {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading | newline_to_br }}</h2>{%- endif -%}
+      {%- if s.paragraph != blank -%}<div class="serena-lead">{{ s.paragraph }}</div>{%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="serena-problem__chips">
+          {%- for block in section.blocks -%}
+            <span class="serena-chip" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="serena-problem__media">
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 45vw', widths: '400, 600, 900, 1200', class: 'serena-problem__img' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'serena-problem__img serena-placeholder' }}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% style %}
+  #serena-problem-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-problem-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-problem-{{ section.id }} .serena-problem__grid { display: grid; grid-template-columns: 1fr 0.92fr; gap: 58px; align-items: center; }
+  #serena-problem-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-problem-{{ section.id }} .serena-h2 { margin: 16px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 42px; line-height: 1.12; color: #2C211B; }
+  #serena-problem-{{ section.id }} .serena-lead { margin: 22px 0 0; font-size: 16px; line-height: 1.75; color: #5A4836; max-width: 480px; }
+  #serena-problem-{{ section.id }} .serena-problem__chips { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  #serena-problem-{{ section.id }} .serena-chip { font-size: 13.5px; color: #7C5A52; background: #F4E6E2; border: 1px solid #ECD6D0; border-radius: 999px; padding: 9px 16px; }
+  #serena-problem-{{ section.id }} .serena-problem__media { border-radius: 18px; overflow: hidden; box-shadow: 0 26px 56px -28px rgba(60,33,20,.55); }
+  #serena-problem-{{ section.id }} .serena-problem__img { display: block; width: 100%; height: 520px; object-fit: cover; object-position: 50% 22%; }
+  @media (max-width: 749px) {
+    #serena-problem-{{ section.id }} { padding: 56px 0; }
+    #serena-problem-{{ section.id }} .serena-problem__grid { grid-template-columns: 1fr; gap: 32px; }
+    #serena-problem-{{ section.id }} .serena-h2 { font-size: 32px; }
+    #serena-problem-{{ section.id }} .serena-problem__img { height: 360px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Проблем",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#FBF5EC" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#C58B86" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "За теб" },
+    { "type": "textarea", "id": "heading", "label": "Заглавие (нов ред = нов ред)", "default": "Не си полудяла.\nТялото ти просто\nсе променя." },
+    { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>Перименопаузата и менопаузата често идват тихо — и объркващо. Дни, в които не се познаваш. Нощи без истинска почивка. Настроение, което се мени без видима причина. Това не е слабост и не е нещо, от което да се срамуваш. Това е естествен етап — и заслужаваш да го преминеш с грижа към себе си.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Изображение" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Симптом / етикет",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Текст", "default": "горещи вълни" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Проблем",
+      "blocks": [
+        { "type": "chip", "settings": { "label": "горещи вълни" } },
+        { "type": "chip", "settings": { "label": "проблеми със съня" } },
+        { "type": "chip", "settings": { "label": "раздразнителност" } },
+        { "type": "chip", "settings": { "label": "промени в настроението" } },
+        { "type": "chip", "settings": { "label": "умора" } },
+        { "type": "chip", "settings": { "label": "усещане, че не си себе си" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

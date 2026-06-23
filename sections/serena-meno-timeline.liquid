@@ -1,0 +1,92 @@
+{%- comment -%} Serena Meno · 6. Timeline / what to expect {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-tl-{{ section.id }}"
+  class="serena-sec serena-tl"
+  style="--bg: {{ s.bg_color }}; --accent: {{ s.accent_color }}; --heading: {{ s.heading_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-head">
+      {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="serena-tl__grid">
+      <div class="serena-tl__line" aria-hidden="true"></div>
+      {%- for block in section.blocks -%}
+        <div class="serena-tl__card" {{ block.shopify_attributes }}>
+          <span class="serena-tl__num">{{ block.settings.number }}</span>
+          {%- if block.settings.label != blank -%}<div class="serena-tl__w">{{ block.settings.label }}</div>{%- endif -%}
+          {%- if block.settings.title != blank -%}<div class="serena-tl__t">{{ block.settings.title }}</div>{%- endif -%}
+          {%- if block.settings.text != blank -%}<div class="serena-tl__d">{{ block.settings.text }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if s.disclaimer != blank -%}<div class="serena-tl__disc">{{ s.disclaimer }}</div>{%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  #serena-tl-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-tl-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-tl-{{ section.id }} .serena-head { text-align: center; max-width: 680px; margin: 0 auto 50px; }
+  #serena-tl-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 800; }
+  #serena-tl-{{ section.id }} .serena-h2 { margin: 14px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; line-height: 1.18; color: var(--heading); }
+  #serena-tl-{{ section.id }} .serena-tl__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; position: relative; }
+  #serena-tl-{{ section.id }} .serena-tl__line { position: absolute; left: 44px; right: 44px; top: 51px; height: 2px; background: linear-gradient(90deg, #5A4332, var(--accent), #5A4332); z-index: 0; }
+  #serena-tl-{{ section.id }} .serena-tl__card { position: relative; z-index: 1; background: #3A2C20; border: 1px solid #4F3B2C; border-radius: 18px; padding: 28px 22px; }
+  #serena-tl-{{ section.id }} .serena-tl__num { width: 46px; height: 46px; border-radius: 50%; background: #3A2C20; border: 1.5px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: Marcellus, serif; font-size: 15px; color: var(--accent); }
+  #serena-tl-{{ section.id }} .serena-tl__w { margin-top: 18px; font-family: Marcellus, serif; font-size: 14px; color: var(--accent); letter-spacing: .02em; }
+  #serena-tl-{{ section.id }} .serena-tl__t { margin-top: 5px; font-weight: 800; font-size: 16px; color: #F4ECDD; }
+  #serena-tl-{{ section.id }} .serena-tl__d { margin-top: 11px; font-size: 13px; line-height: 1.6; color: #C9B49E; }
+  #serena-tl-{{ section.id }} .serena-tl__disc { text-align: center; margin: 30px auto 0; font-size: 12px; color: #9C8470; line-height: 1.6; max-width: 720px; }
+  @media (max-width: 990px) { #serena-tl-{{ section.id }} .serena-tl__grid { grid-template-columns: repeat(2, 1fr); } #serena-tl-{{ section.id }} .serena-tl__line { display: none; } }
+  @media (max-width: 749px) {
+    #serena-tl-{{ section.id }} { padding: 56px 0; }
+    #serena-tl-{{ section.id }} .serena-head { margin-bottom: 32px; }
+    #serena-tl-{{ section.id }} .serena-h2 { font-size: 28px; }
+    #serena-tl-{{ section.id }} .serena-tl__grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Времева линия",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#2C211B" },
+    { "type": "color", "id": "accent_color", "label": "Акцент (злато)", "default": "#E0B07E" },
+    { "type": "color", "id": "heading_color", "label": "Цвят на заглавието", "default": "#F4ECDD" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Постоянството има значение" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Какво можеш да очакваш при постоянен прием?" },
+    { "type": "richtext", "id": "disclaimer", "label": "Бележка / disclaimer", "default": "<p>Резултатите са индивидуални и зависят от организма, начина на живот и постоянството на приема.</p>" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "phase",
+      "name": "Етап",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Номер", "default": "01" },
+        { "type": "text", "id": "label", "label": "Период", "default": "Първа седмица" },
+        { "type": "text", "id": "title", "label": "Заглавие", "default": "Изграждаш рутината" },
+        { "type": "textarea", "id": "text", "label": "Описание", "default": "Започваш да приемаш Serena Meno ежедневно и да следиш как тялото ти реагира. Целта е постоянство, а не моментален ефект." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Времева линия",
+      "blocks": [
+        { "type": "phase", "settings": { "number": "01", "label": "Първа седмица", "title": "Изграждаш рутината", "text": "Започваш да приемаш Serena Meno ежедневно и да следиш как тялото ти реагира. Целта е постоянство, а не моментален ефект." } },
+        { "type": "phase", "settings": { "number": "02", "label": "След 2 седмици", "title": "Първи усещания", "text": "Някои жени започват да забелязват промени в съня, настроението или усещането за ежедневен комфорт." } },
+        { "type": "phase", "settings": { "number": "03", "label": "След 30 дни", "title": "По-ясна картина", "text": "При редовен прием можеш по-добре да оцениш как Serena Meno се вписва в твоята рутина и как се чувстваш." } },
+        { "type": "phase", "settings": { "number": "04", "label": "След 60–90 дни", "title": "Дългосрочна подкрепа", "text": "Менопаузата е процес, не момент. Serena Meno е създадена като ежедневна подкрепа за баланс, комфорт и по-спокойна рутина." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

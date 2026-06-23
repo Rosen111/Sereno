@@ -1,0 +1,95 @@
+{%- comment -%} Serena Meno · 10. FAQ accordion (native <details>, no JS) {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-faq-{{ section.id }}"
+  class="serena-sec serena-faq"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --sign: {{ s.sign_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-head">
+      {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="serena-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="serena-faq__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary class="serena-faq__q">
+            <span>{{ block.settings.question }}</span>
+            <span class="serena-faq__sign" aria-hidden="true"></span>
+          </summary>
+          <div class="serena-faq__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% style %}
+  #serena-faq-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-faq-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-faq-{{ section.id }} .serena-head { text-align: center; margin: 0 auto 40px; }
+  #serena-faq-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-faq-{{ section.id }} .serena-h2 { margin: 14px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; color: #2C211B; }
+  #serena-faq-{{ section.id }} .serena-faq__list { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  #serena-faq-{{ section.id }} .serena-faq__item { background: #FFFDF8; border: 1px solid #ECDFCB; border-radius: 14px; padding: 4px 24px; }
+  #serena-faq-{{ section.id }} .serena-faq__q { display: flex; align-items: center; justify-content: space-between; gap: 14px; cursor: pointer; list-style: none; padding: 16px 0; font-weight: 700; font-size: 16px; color: #2C211B; }
+  #serena-faq-{{ section.id }} .serena-faq__q::-webkit-details-marker { display: none; }
+  #serena-faq-{{ section.id }} .serena-faq__sign { flex: none; position: relative; width: 22px; height: 22px; }
+  #serena-faq-{{ section.id }} .serena-faq__sign::before, #serena-faq-{{ section.id }} .serena-faq__sign::after { content: ''; position: absolute; background: var(--sign); border-radius: 2px; transition: transform .25s, opacity .25s; }
+  #serena-faq-{{ section.id }} .serena-faq__sign::before { top: 50%; left: 2px; right: 2px; height: 2px; transform: translateY(-50%); }
+  #serena-faq-{{ section.id }} .serena-faq__sign::after { left: 50%; top: 2px; bottom: 2px; width: 2px; transform: translateX(-50%); }
+  #serena-faq-{{ section.id }} .serena-faq__item[open] .serena-faq__sign::after { opacity: 0; transform: translateX(-50%) rotate(90deg); }
+  #serena-faq-{{ section.id }} .serena-faq__a { font-size: 14px; color: #6B5B4E; line-height: 1.6; padding: 0 0 18px; max-width: 680px; }
+  #serena-faq-{{ section.id }} .serena-faq__a > :first-child { margin-top: 0; }
+  @media (max-width: 749px) {
+    #serena-faq-{{ section.id }} { padding: 56px 0; }
+    #serena-faq-{{ section.id }} .serena-h2 { font-size: 28px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · FAQ",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#FBF5EC" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#B06A45" },
+    { "type": "color", "id": "sign_color", "label": "Цвят на знака +", "default": "#BD5532" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Въпроси" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Често задавани въпроси" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Въпрос",
+      "settings": [
+        { "type": "checkbox", "id": "open", "label": "Отворен по подразбиране", "default": false },
+        { "type": "text", "id": "question", "label": "Въпрос", "default": "За кого е Serena Meno?" },
+        { "type": "richtext", "id": "answer", "label": "Отговор", "default": "<p>Serena Meno е създадена за жени 40+, които преминават през перименопауза или менопауза и търсят ежедневна подкрепа без хормони.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "open": true, "question": "За кого е Serena Meno?", "answer": "<p>Serena Meno е създадена за жени 40+, които преминават през перименопауза или менопауза и търсят ежедневна подкрепа без хормони.</p>" } },
+        { "type": "faq", "settings": { "question": "Подходяща ли е за жени в перименопауза?", "answer": "<p>Да. Формулата е създадена като подкрепа през целия преходен период — както при перименопауза, така и при менопауза.</p>" } },
+        { "type": "faq", "settings": { "question": "Как се приема?", "answer": "<p>Препоръчителният прием е 2 капсули дневно с вода, за предпочитане след закуска или след най-голямото хранене.</p>" } },
+        { "type": "faq", "settings": { "question": "Колко време стига една опаковка?", "answer": "<p>Една опаковка съдържа 60 веган капсули и стига за 30 дни при прием от 2 капсули дневно.</p>" } },
+        { "type": "faq", "settings": { "question": "Кога мога да очаквам ефект?", "answer": "<p>Индивидуално е. Някои жени забелязват първи усещания след 2–4 седмици, но менопаузата е процес и ефектът се оценява най-добре при редовен прием.</p>" } },
+        { "type": "faq", "settings": { "question": "Съдържа ли хормони?", "answer": "<p>Не. Serena Meno е формула без хормони и без HRT, и не изисква рецепта.</p>" } },
+        { "type": "faq", "settings": { "question": "Веган ли е?", "answer": "<p>Да. Капсулите са веган (растителни HPMC).</p>" } },
+        { "type": "faq", "settings": { "question": "Има ли глутен, лактоза или ГМО?", "answer": "<p>Формулата е без глутен, без лактоза и без ГМО, произведена в ЕС.</p>" } },
+        { "type": "faq", "settings": { "question": "Може ли да се приема дългосрочно?", "answer": "<p>Да, създадена е като ежедневна подкрепа за продължителен период. При прием на лекарства или притеснения се консултирай с лекар.</p>" } },
+        { "type": "faq", "settings": { "question": "Какво включва Serena Wellness Program?", "answer": "<p>Безплатна 90-дневна wellness програма с насоки за сън, движение, хранене и спокойна ежедневна рутина — по преценка на магазина.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

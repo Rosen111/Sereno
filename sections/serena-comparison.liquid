@@ -1,0 +1,102 @@
+{%- comment -%} Serena Meno · 9. Comparison {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-cmp-{{ section.id }}"
+  class="serena-sec serena-cmp"
+  style="--bg: {{ s.bg_color }}; --pro-bg: {{ s.pro_bg }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-head">
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="serena-cmp__grid">
+      <div class="serena-cmp__col serena-cmp__col--con">
+        {%- if s.con_title != blank -%}<div class="serena-cmp__label serena-cmp__label--con">{{ s.con_title }}</div>{%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'con' -%}
+            <div class="serena-cmp__row" {{ block.shopify_attributes }}>
+              <span class="serena-cmp__mark serena-cmp__mark--con">–</span>
+              <span class="serena-cmp__txt serena-cmp__txt--con">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="serena-cmp__col serena-cmp__col--pro">
+        {%- if s.pro_title != blank -%}<div class="serena-cmp__label serena-cmp__label--pro">{{ s.pro_title }}</div>{%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pro' -%}
+            <div class="serena-cmp__row" {{ block.shopify_attributes }}>
+              <span class="serena-cmp__mark serena-cmp__mark--pro">✓</span>
+              <span class="serena-cmp__txt serena-cmp__txt--pro">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  #serena-cmp-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-cmp-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #serena-cmp-{{ section.id }} .serena-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+  #serena-cmp-{{ section.id }} .serena-h2 { margin: 0; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; line-height: 1.18; color: #2C211B; }
+  #serena-cmp-{{ section.id }} .serena-cmp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 920px; margin: 0 auto; }
+  #serena-cmp-{{ section.id }} .serena-cmp__col { border-radius: 20px; padding: 32px 30px; }
+  #serena-cmp-{{ section.id }} .serena-cmp__col--con { background: #EFE7DA; border: 1px solid #DED2BE; }
+  #serena-cmp-{{ section.id }} .serena-cmp__col--pro { background: var(--pro-bg); box-shadow: 0 22px 48px -26px rgba(60,60,30,.6); }
+  #serena-cmp-{{ section.id }} .serena-cmp__label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; margin-bottom: 18px; }
+  #serena-cmp-{{ section.id }} .serena-cmp__label--con { color: #A2917C; }
+  #serena-cmp-{{ section.id }} .serena-cmp__label--pro { color: #DDE3CC; }
+  #serena-cmp-{{ section.id }} .serena-cmp__row { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; }
+  #serena-cmp-{{ section.id }} .serena-cmp__mark { flex: none; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-top: 1px; }
+  #serena-cmp-{{ section.id }} .serena-cmp__mark--con { border: 1.5px solid #C3B299; color: #B79C82; }
+  #serena-cmp-{{ section.id }} .serena-cmp__mark--pro { background: #EAF0DC; color: #5C6A48; font-weight: 800; }
+  #serena-cmp-{{ section.id }} .serena-cmp__txt { font-size: 14px; line-height: 1.45; }
+  #serena-cmp-{{ section.id }} .serena-cmp__txt--con { color: #7C6957; }
+  #serena-cmp-{{ section.id }} .serena-cmp__txt--pro { color: #F2F4E8; }
+  @media (max-width: 749px) {
+    #serena-cmp-{{ section.id }} { padding: 56px 0; }
+    #serena-cmp-{{ section.id }} .serena-h2 { font-size: 26px; }
+    #serena-cmp-{{ section.id }} .serena-cmp__grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Сравнение",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F3E8D8" },
+    { "type": "color", "id": "pro_bg", "label": "Фон на дясната колона", "default": "#74805F" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Да изтърпиш периода не е единственият вариант" },
+    { "type": "text", "id": "con_title", "label": "Заглавие лява колона", "default": "Без целенасочена подкрепа" },
+    { "type": "text", "id": "pro_title", "label": "Заглавие дясна колона", "default": "Със Serena Meno" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+  ],
+  "blocks": [
+    { "type": "con", "name": "Точка · без подкрепа", "settings": [ { "type": "text", "id": "label", "label": "Текст", "default": "Симптомите се приемат като „нормални“" } ] },
+    { "type": "pro", "name": "Точка · със Serena", "settings": [ { "type": "text", "id": "label", "label": "Текст", "default": "Ежедневна рутина за себе си" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Сравнение",
+      "blocks": [
+        { "type": "con", "settings": { "label": "Симптомите се приемат като „нормални“" } },
+        { "type": "con", "settings": { "label": "Липсва ясна ежедневна рутина" } },
+        { "type": "con", "settings": { "label": "По-трудно проследяваш как се чувстваш" } },
+        { "type": "con", "settings": { "label": "Повече объркване и дискомфорт" } },
+        { "type": "pro", "settings": { "label": "Ежедневна рутина за себе си" } },
+        { "type": "pro", "settings": { "label": "Подкрепа за баланс и комфорт" } },
+        { "type": "pro", "settings": { "label": "Създадена за жени 40+" } },
+        { "type": "pro", "settings": { "label": "Лесен ежедневен прием" } },
+        { "type": "pro", "settings": { "label": "90-дневна wellness програма" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
