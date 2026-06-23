@@ -42,6 +42,11 @@
     #serena-ritual-{{ section.id }} .serena-h2 { font-size: 28px; }
     #serena-ritual-{{ section.id }} .serena-ritual__grid { grid-template-columns: 1fr; gap: 14px; }
   }
+  /* polish */
+  #serena-ritual-{{ section.id }} .serena-ritual__card { box-shadow: 0 14px 34px -28px rgba(60,33,20,.3); transition: transform .25s ease, box-shadow .25s ease; }
+  @media (hover: hover) { #serena-ritual-{{ section.id }} .serena-ritual__card:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -28px rgba(60,33,20,.38); } }
+  #serena-ritual-{{ section.id }} .serena-ritual__num { box-shadow: 0 0 0 6px rgba(116,128,95,.10); }
+  @media (max-width: 749px) { #serena-ritual-{{ section.id }} .serena-ritual__d { font-size: 14px; } }
 {% endstyle %}
 
 {% schema %}

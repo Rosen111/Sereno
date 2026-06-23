@@ -4,7 +4,31 @@
   data-section="{{ section.id }}"
 >
   {%- comment -%} Scroll anchor for Serena Meno CTA buttons (only on that template) {%- endcomment -%}
-  {%- if template.suffix == 'serena-meno' -%}<span id="serena-product-form" aria-hidden="true" style="display:block;height:0;scroll-margin-top:90px;"></span>{%- endif -%}
+  {%- if template.suffix == 'serena-meno' -%}
+    <span id="serena-product-form" aria-hidden="true" style="display:block;height:0;scroll-margin-top:90px;"></span>
+    {%- comment -%} Serena Meno top-section polish — scoped to this product only {%- endcomment -%}
+    {%- style -%}
+      #MainProduct-{{ section.id }} { --serena-accent: #BD5532; }
+      @media screen and (min-width: 990px) {
+        #MainProduct-{{ section.id }} .product { column-gap: 3.25rem; align-items: flex-start; }
+      }
+      #MainProduct-{{ section.id }} .product__title,
+      #MainProduct-{{ section.id }} .product__title h1 { line-height: 1.12; letter-spacing: .2px; }
+      #MainProduct-{{ section.id }} .atc-button,
+      #MainProduct-{{ section.id }} .quick-order-tel-btn { border-radius: 14px; min-height: 54px; }
+      #MainProduct-{{ section.id }} .atc-button { box-shadow: 0 16px 30px -14px rgba(189,85,50,.5); letter-spacing: .02em; }
+      #MainProduct-{{ section.id }} .quick-order-tel-btn {
+        background: transparent; border: 1.5px solid var(--serena-accent); color: var(--serena-accent);
+        font-weight: 700; box-shadow: none; transition: background .2s ease, color .2s ease;
+      }
+      #MainProduct-{{ section.id }} .quick-order-tel-btn:hover { background: var(--serena-accent); color: #FBF6EE; }
+      @media screen and (max-width: 749px) {
+        #MainProduct-{{ section.id }} .atc-button,
+        #MainProduct-{{ section.id }} .quick-order-tel-btn { min-height: 56px; font-size: 16px; }
+        #MainProduct-{{ section.id }} .product__info-container { padding-top: 4px; }
+      }
+    {%- endstyle -%}
+  {%- endif -%}
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.mobile_padding_top }}px;

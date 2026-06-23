@@ -61,6 +61,16 @@
     #serena-cta-{{ section.id }} .serena-cta__band { gap: 18px; }
     #serena-cta-{{ section.id }} .serena-cta__band-btn { width: 100%; text-align: center; }
   }
+  /* polish */
+  #serena-cta-{{ section.id }} .serena-cta__btn { letter-spacing: .02em; min-width: 260px; }
+  #serena-cta-{{ section.id }} .serena-cta__final { padding-top: 4px; padding-bottom: 4px; }
+  #serena-cta-{{ section.id }} .serena-cta__reassure { margin-top: 32px; gap: 22px 34px; }
+  @media (max-width: 749px) {
+    #serena-cta-{{ section.id }} .serena-cta__h { font-size: 28px; }
+    #serena-cta-{{ section.id }} .serena-cta__btn { min-width: 0; width: 100%; padding: 18px 32px; }
+    #serena-cta-{{ section.id }} .serena-cta__reassure { gap: 14px 22px; }
+    #serena-cta-{{ section.id }} .serena-cta__band-h { font-size: 22px; }
+  }
 {% endstyle %}
 
 {% schema %}

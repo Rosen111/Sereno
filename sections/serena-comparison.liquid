@@ -61,6 +61,11 @@
     #serena-cmp-{{ section.id }} .serena-h2 { font-size: 26px; }
     #serena-cmp-{{ section.id }} .serena-cmp__grid { grid-template-columns: 1fr; gap: 14px; }
   }
+  /* polish */
+  #serena-cmp-{{ section.id }} .serena-cmp__col--con { box-shadow: 0 14px 34px -28px rgba(60,33,20,.25); }
+  #serena-cmp-{{ section.id }} .serena-cmp__row { border-bottom: 1px solid rgba(0,0,0,.04); }
+  #serena-cmp-{{ section.id }} .serena-cmp__row:last-child { border-bottom: none; }
+  @media (max-width: 749px) { #serena-cmp-{{ section.id }} .serena-cmp__txt { font-size: 14.5px; } }
 {% endstyle %}
 
 {% schema %}

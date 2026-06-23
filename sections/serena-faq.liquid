@@ -46,6 +46,11 @@
     #serena-faq-{{ section.id }} { padding: 56px 0; }
     #serena-faq-{{ section.id }} .serena-h2 { font-size: 28px; }
   }
+  /* polish */
+  #serena-faq-{{ section.id }} .serena-faq__item { box-shadow: 0 10px 28px -26px rgba(60,33,20,.3); transition: border-color .2s ease, box-shadow .2s ease; }
+  #serena-faq-{{ section.id }} .serena-faq__item[open] { border-color: #E2CDB6; box-shadow: 0 16px 36px -26px rgba(60,33,20,.38); }
+  #serena-faq-{{ section.id }} .serena-faq__q { min-height: 30px; }
+  @media (max-width: 749px) { #serena-faq-{{ section.id }} .serena-faq__q { font-size: 15.5px; padding: 18px 0; } #serena-faq-{{ section.id }} .serena-faq__a { font-size: 14.5px; } }
 {% endstyle %}
 
 {% schema %}

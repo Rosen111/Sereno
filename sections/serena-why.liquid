@@ -51,6 +51,11 @@
     #serena-why-{{ section.id }} .serena-h2 { font-size: 28px; }
     #serena-why-{{ section.id }} .serena-why__grid { grid-template-columns: 1fr; }
   }
+  /* polish */
+  #serena-why-{{ section.id }} .serena-why__card { box-shadow: 0 14px 34px -28px rgba(60,33,20,.3); transition: transform .25s ease, box-shadow .25s ease; }
+  @media (hover: hover) { #serena-why-{{ section.id }} .serena-why__card:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -28px rgba(60,33,20,.38); } }
+  #serena-why-{{ section.id }} .serena-why__ring { width: 14px; height: 14px; background: var(--ring); border: none; box-shadow: 0 0 0 5px rgba(156,147,184,.18); }
+  @media (max-width: 749px) { #serena-why-{{ section.id }} .serena-why__d { font-size: 13.5px; } }
 {% endstyle %}
 
 {% schema %}

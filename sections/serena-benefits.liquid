@@ -49,6 +49,11 @@
     #serena-benefits-{{ section.id }} .serena-h2 { font-size: 28px; }
     #serena-benefits-{{ section.id }} .serena-benefits__grid { grid-template-columns: 1fr; gap: 12px; }
   }
+  /* polish */
+  #serena-benefits-{{ section.id }} .serena-card { box-shadow: 0 14px 34px -26px rgba(60,33,20,.35); transition: transform .25s ease, box-shadow .25s ease; }
+  @media (hover: hover) { #serena-benefits-{{ section.id }} .serena-card:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -26px rgba(60,33,20,.42); } }
+  #serena-benefits-{{ section.id }} .serena-card__ring { width: 14px; height: 14px; background: #C58B86; border: none; box-shadow: 0 0 0 5px rgba(197,139,134,.18); }
+  @media (max-width: 749px) { #serena-benefits-{{ section.id }} .serena-card__d { font-size: 13.5px; } }
 {% endstyle %}
 
 {% schema %}

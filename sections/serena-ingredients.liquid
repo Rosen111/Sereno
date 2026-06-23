@@ -58,6 +58,11 @@
     #serena-ing-{{ section.id }} .serena-h2 { font-size: 28px; }
     #serena-ing-{{ section.id }} .serena-ing__grid { grid-template-columns: 1fr; gap: 14px; }
   }
+  /* polish */
+  #serena-ing-{{ section.id }} .serena-ing__card { box-shadow: 0 14px 34px -26px rgba(60,33,20,.32); transition: transform .25s ease, box-shadow .25s ease; }
+  @media (hover: hover) { #serena-ing-{{ section.id }} .serena-ing__card:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -26px rgba(60,33,20,.4); } }
+  #serena-ing-{{ section.id }} .serena-ing__ring { width: 14px; height: 14px; background: var(--ring); border: none; box-shadow: 0 0 0 5px rgba(116,128,95,.16); }
+  @media (max-width: 749px) { #serena-ing-{{ section.id }} .serena-ing__d { font-size: 13.5px; } }
 {% endstyle %}
 
 {% schema %}

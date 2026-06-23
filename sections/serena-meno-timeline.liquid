@@ -47,6 +47,11 @@
     #serena-tl-{{ section.id }} .serena-h2 { font-size: 28px; }
     #serena-tl-{{ section.id }} .serena-tl__grid { grid-template-columns: 1fr; gap: 14px; }
   }
+  /* polish */
+  #serena-tl-{{ section.id }} .serena-tl__card { box-shadow: 0 18px 40px -28px rgba(0,0,0,.55); transition: transform .25s ease, box-shadow .25s ease; }
+  @media (hover: hover) { #serena-tl-{{ section.id }} .serena-tl__card:hover { transform: translateY(-3px); box-shadow: 0 26px 50px -28px rgba(0,0,0,.6); } }
+  #serena-tl-{{ section.id }} .serena-tl__num { box-shadow: 0 0 0 6px rgba(224,176,126,.10); }
+  @media (max-width: 749px) { #serena-tl-{{ section.id }} .serena-tl__d { font-size: 13.5px; } }
 {% endstyle %}
 
 {% schema %}
