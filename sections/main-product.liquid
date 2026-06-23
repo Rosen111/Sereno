@@ -3,6 +3,8 @@
   class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
 >
+  {%- comment -%} Scroll anchor for Serena Meno CTA buttons (only on that template) {%- endcomment -%}
+  {%- if template.suffix == 'serena-meno' -%}<span id="serena-product-form" aria-hidden="true" style="display:block;height:0;scroll-margin-top:90px;"></span>{%- endif -%}
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.mobile_padding_top }}px;
