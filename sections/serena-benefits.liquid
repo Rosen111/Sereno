@@ -10,6 +10,7 @@
     <div class="serena-head">
       {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
       {%- if s.heading != blank -%}<h2 class="serena-h2 serena-h2--center">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.subheading != blank -%}<p class="serena-benefits__subhead">{{ s.subheading }}</p>{%- endif -%}
     </div>
     <div class="serena-benefits__grid">
       {%- for block in section.blocks -%}
@@ -17,6 +18,8 @@
           <span class="serena-card__ic">
             {%- if block.settings.icon != blank -%}
               {{ block.settings.icon | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40, 80', alt: '' }}
+            {%- elsif block.settings.icon_emoji != blank -%}
+              <span class="serena-card__emoji">{{ block.settings.icon_emoji }}</span>
             {%- else -%}
               <span class="serena-card__ring"></span>
             {%- endif -%}
@@ -25,6 +28,12 @@
           {%- if block.settings.text != blank -%}<div class="serena-card__d">{{ block.settings.text }}</div>{%- endif -%}
         </div>
       {%- endfor -%}
+      {%- if s.tile_image != blank -%}
+        <div class="serena-benefits__tile">
+          {{ s.tile_image | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 50vw, 220px', widths: '300, 500, 700', alt: '' }}
+          {%- if s.tile_caption != blank -%}<div class="serena-benefits__tile-cap">{{ s.tile_caption }}</div>{%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -62,10 +71,14 @@
   "tag": "section",
   "class": "serena-section",
   "settings": [
-    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F3E8D8" },
-    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#B06A45" },
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F6EAE6" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#C07A6A" },
     { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Какво подкрепя" },
     { "type": "text", "id": "heading", "label": "Заглавие", "default": "Подкрепа за най-честите промени в периода на менопауза" },
+    { "type": "textarea", "id": "subheading", "label": "Подзаглавие (курсив)", "default": "Не за да „поправиш“ себе си — а за да се усещаш малко повече като себе си, всеки ден." },
+    { "type": "header", "content": "Снимка-плочка (по избор)" },
+    { "type": "image_picker", "id": "tile_image", "label": "Изображение" },
+    { "type": "text", "id": "tile_caption", "label": "Надпис върху снимката", "default": "Създадена за теб, в този период." },
     { "type": "header", "content": "Отстояние" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
@@ -75,7 +88,8 @@
       "type": "benefit",
       "name": "Карта с полза",
       "settings": [
-        { "type": "image_picker", "id": "icon", "label": "Икона (по избор)" },
+        { "type": "text", "id": "icon_emoji", "label": "Икона (емоджи/символ)", "default": "❀" },
+        { "type": "image_picker", "id": "icon", "label": "Икона-изображение (по избор)" },
         { "type": "text", "id": "title", "label": "Заглавие", "default": "Подкрепа при горещи вълни" },
         { "type": "textarea", "id": "text", "label": "Описание", "default": "Създадена да подпомага тялото ти в моментите на внезапна топлина и дискомфорт." }
       ]

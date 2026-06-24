@@ -1,178 +1,220 @@
 /* ============================================================
-   Serena Meno — premium design system (custom sections)
+   Serena Meno — premium design system v2 (lower sections)
    Loaded once via snippets/serena-meno-fonts.liquid.
-   Uses !important to upgrade the older per-section inline rules
-   without rewriting every section file. Visual only — no layout
-   or functional changes to the native product form.
+   Implements the v2 mobile-first visual direction for the
+   conversion sections below the native product section.
+   Uses !important to upgrade the per-section inline rules
+   without breaking schema/markup. Visual only.
    ============================================================ */
 
 :root {
-  --sm-cream: #F7F0E4;
-  --sm-card: #FFFDFA;
+  --sm-cream: #FBF5EC;
+  --sm-card: #FFFDF8;
   --sm-card-border: rgba(74, 48, 32, 0.10);
-  --sm-radius: 22px;
-  --sm-radius-sm: 16px;
-  --sm-shadow: 0 18px 44px -30px rgba(60, 33, 20, 0.34);
-  --sm-shadow-hover: 0 32px 64px -34px rgba(60, 33, 20, 0.46);
+  --sm-radius: 18px;
+  --sm-radius-sm: 14px;
+  --sm-shadow: 0 16px 40px -28px rgba(60, 33, 20, 0.32);
+  --sm-shadow-hover: 0 30px 60px -32px rgba(60, 33, 20, 0.45);
   --sm-accent: #BD5532;
   --sm-accent-deep: #A8482A;
   --sm-rose: #C58B86;
-  --sm-rose-tint: #F4E7E1;
-  --sm-sage: #7E8C5C;
-  --sm-gold: #E2B583;
-  --sm-ink: #2A1F18;
-  --sm-body: #6E5E50;
+  --sm-sage: #74805F;
+  --sm-gold: #E0B07E;
+  --sm-ink: #2C211B;
+  --sm-body: #6B5B4E;
   --sm-muted: #9A8470;
 }
 
-/* ---------- base typography & rhythm ---------- */
-.serena-sec {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+/* ---------- base typography ---------- */
+.serena-sec { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 .serena-sec * { box-sizing: border-box; }
-
-.serena-sec .serena-eyebrow {
-  font-size: 11px !important;
-  letter-spacing: 0.24em !important;
-  font-weight: 700 !important;
-  opacity: 0.95;
-}
-.serena-sec .serena-eyebrow::after {
-  content: "";
-  display: block;
-  width: 34px;
-  height: 2px;
-  margin-top: 12px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.5;
-}
-.serena-sec .serena-head .serena-eyebrow::after,
-.serena-sec .serena-rev__head .serena-eyebrow::after { margin-left: auto; margin-right: auto; }
-
-.serena-sec .serena-h2 {
-  letter-spacing: -0.015em !important;
-  color: var(--sm-ink) !important;
-  font-weight: 400 !important;
-}
+.serena-sec .serena-eyebrow { font-size: 10.5px; letter-spacing: 0.2em; font-weight: 800; }
+.serena-sec .serena-h2 { letter-spacing: -0.01em; color: var(--sm-ink); }
 .serena-sec .serena-lead,
-.serena-sec .serena-sub {
-  line-height: 1.78 !important;
-  color: var(--sm-body) !important;
+.serena-sec .serena-sub { line-height: 1.72; color: #5A4836; }
+
+/* ============================================================
+   1 · BENEFITS — rose section, emoji circles, italic subhead
+   ============================================================ */
+.serena-benefits .serena-sub,
+.serena-benefits__subhead {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-style: italic !important;
+  font-size: 18px !important;
+  line-height: 1.45 !important;
+  color: #9C6256 !important;
+  max-width: 320px;
+  margin-left: auto !important; margin-right: auto !important;
 }
-
-/* connective rhythm: hairline transition between stacked sections */
-.serena-sec + .serena-sec { position: relative; }
-
-/* ---------- unified premium card ---------- */
-.serena-benefits .serena-card,
-.serena-why__card,
-.serena-ritual__card,
-.serena-ing__card,
-.serena-rev__card {
-  background: var(--sm-card) !important;
-  border: 1px solid var(--sm-card-border) !important;
-  border-radius: var(--sm-radius) !important;
+.serena-benefits__grid { gap: 12px !important; }
+.serena-benefits .serena-card {
+  background: #FFFCFA !important;
+  border: 1px solid #EFDDD7 !important;
+  border-radius: 18px !important;
   box-shadow: var(--sm-shadow) !important;
-  transition: transform 0.3s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s ease !important;
-}
-.serena-benefits .serena-card { padding: 30px 24px !important; }
-.serena-why__card { padding: 26px 24px !important; gap: 18px !important; }
-.serena-ritual__card { padding: 38px 30px !important; }
-.serena-ing__card { padding: 30px 28px !important; }
-.serena-rev__card { padding: 32px 30px !important; }
-
-/* desktop-only hover lift */
-@media (hover: hover) and (pointer: fine) {
-  .serena-benefits .serena-card:hover,
-  .serena-why__card:hover,
-  .serena-ritual__card:hover,
-  .serena-ing__card:hover,
-  .serena-rev__card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: var(--sm-shadow-hover) !important;
-  }
-}
-
-/* ---------- refined icon "dot + halo" placeholders ---------- */
-.serena-card__ic,
-.serena-why__ic,
-.serena-ing__ic {
-  background: #FBF4EF !important;
-  box-shadow: inset 0 0 0 1px rgba(74,48,32,.05);
-}
-.serena-card__ring,
-.serena-why__ring,
-.serena-ing__ring {
-  width: 13px !important;
-  height: 13px !important;
-  border: none !important;
-  border-radius: 50% !important;
-}
-.serena-card__ring { background: var(--sm-rose) !important; box-shadow: 0 0 0 6px rgba(197,139,134,0.16) !important; }
-.serena-why__ring  { background: var(--sm-rose) !important; box-shadow: 0 0 0 6px rgba(197,139,134,0.16) !important; }
-.serena-ing__ring  { background: var(--sm-sage) !important; box-shadow: 0 0 0 6px rgba(126,140,92,0.16) !important; }
-
-.serena-card__t,
-.serena-why__t { color: var(--sm-ink) !important; font-weight: 700 !important; letter-spacing: -0.01em; }
-.serena-card__d,
-.serena-why__d,
-.serena-ing__d { color: var(--sm-body) !important; line-height: 1.62 !important; }
-
-/* ---------- problem section ---------- */
-.serena-problem__media { border-radius: 26px !important; box-shadow: 0 36px 70px -34px rgba(60,33,20,.5) !important; }
-.serena-problem__img, .serena-problem__ph { border-radius: 26px !important; }
-.serena-problem__ph { background: linear-gradient(150deg, var(--sm-rose-tint) 0%, var(--sm-cream) 55%, #EEDFCB 100%) !important; }
-.serena-problem__chips .serena-chip {
-  background: rgba(255,255,255,0.6) !important;
-  border: 1px solid rgba(197,139,134,0.4) !important;
-  color: #7C5A52 !important;
-  box-shadow: 0 4px 14px -8px rgba(60,33,20,0.25) !important;
-  backdrop-filter: blur(2px);
-}
-
-/* ---------- ritual numerals ---------- */
-.serena-ritual__num {
-  border: none !important;
-  background: #EDEBDD !important;
-  color: var(--sm-sage) !important;
-  box-shadow: 0 0 0 7px rgba(126,140,92,0.10) !important;
-}
-
-/* ---------- timeline (dark) ---------- */
-.serena-tl__card {
-  background: linear-gradient(180deg, #34271D 0%, #2C2017 100%) !important;
-  border: 1px solid rgba(226,181,131,0.18) !important;
-  border-radius: var(--sm-radius) !important;
-  box-shadow: 0 24px 50px -30px rgba(0,0,0,0.6) !important;
+  padding: 22px 18px !important;
   transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease !important;
 }
-@media (hover: hover) and (pointer: fine) {
-  .serena-tl__card:hover { transform: translateY(-4px) !important; box-shadow: 0 32px 60px -30px rgba(0,0,0,0.7) !important; }
+.serena-benefits .serena-card__ic {
+  width: 46px !important; height: 46px !important;
+  background: #F4DAD3 !important;
+  box-shadow: none !important;
 }
-.serena-tl__num { background: rgba(226,181,131,0.08) !important; box-shadow: 0 0 0 7px rgba(226,181,131,0.07) !important; }
+.serena-benefits .serena-card__ring { display: none !important; }
+.serena-benefits .serena-card__emoji { font-size: 21px; line-height: 1; color: var(--sm-accent); }
+.serena-benefits .serena-card__t { color: var(--sm-ink) !important; font-weight: 800 !important; font-size: 14.5px !important; }
+.serena-benefits .serena-card__d { color: #8A6A60 !important; font-size: 12.5px !important; line-height: 1.5 !important; }
+/* optional lifestyle photo tile */
+.serena-benefits__tile { position: relative; border-radius: 18px; overflow: hidden; min-height: 160px; }
+.serena-benefits__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.serena-benefits__tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,33,27,0) 40%, rgba(44,33,27,.72) 100%); }
+.serena-benefits__tile-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 16px 16px; z-index: 1; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; line-height: 1.25; color: #FCF6EC; }
 
-/* ---------- reviews ---------- */
-.serena-rev__q { color: #4A3829 !important; }
-.serena-rev__card { position: relative; }
+/* ============================================================
+   2 · WHY — single white panel, divided rows, purple checks
+   ============================================================ */
+.serena-why__grid {
+  display: block !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E7DFEA !important;
+  border-radius: 20px !important;
+  padding: 4px 20px !important;
+  box-shadow: 0 16px 38px -26px rgba(60,33,20,.4) !important;
+  max-width: 760px; margin-left: auto; margin-right: auto;
+}
+.serena-why__card {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #EFEAF2 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 16px 0 !important;
+  gap: 14px !important;
+  transform: none !important;
+}
+.serena-why__card:last-child { border-bottom: none !important; }
+.serena-why__ic {
+  width: 27px !important; height: 27px !important;
+  background: #9C93B8 !important;
+  box-shadow: none !important;
+  position: relative;
+}
+.serena-why__ring,
+.serena-why__ic img { display: none !important; }
+.serena-why__ic::after { content: "✓"; color: #fff; font-size: 13px; font-weight: 800; line-height: 1; }
+.serena-why__t { color: var(--sm-ink) !important; font-weight: 800 !important; font-size: 14px !important; }
+.serena-why__d { color: #7C6957 !important; font-size: 12.5px !important; }
+
+/* ============================================================
+   3 · RITUAL — horizontal rows (number left, text right)
+   ============================================================ */
+.serena-ritual__grid { grid-template-columns: 1fr !important; gap: 11px !important; max-width: 720px; margin-left: auto; margin-right: auto; }
+.serena-ritual__card {
+  position: relative !important;
+  text-align: left !important;
+  padding: 18px 18px 18px 78px !important;
+  border-radius: 16px !important;
+  box-shadow: var(--sm-shadow) !important;
+}
+.serena-ritual__num {
+  position: absolute !important;
+  left: 16px !important; top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  width: 46px !important; height: 46px !important;
+  font-size: 17px !important;
+}
+.serena-ritual__t { text-align: left !important; margin-top: 0 !important; font-size: 14.5px !important; }
+.serena-ritual__d { text-align: left !important; font-size: 12.5px !important; }
+
+/* ============================================================
+   4 · TIMELINE — vertical line + dots (dark)
+   ============================================================ */
+.serena-tl__grid {
+  grid-template-columns: 1fr !important;
+  gap: 22px !important;
+  max-width: 540px; margin-left: auto; margin-right: auto;
+  position: relative;
+}
+.serena-tl__line {
+  left: 13px !important; right: auto !important;
+  top: 6px !important; bottom: 6px !important;
+  width: 2px !important; height: auto !important;
+  display: block !important;
+}
+.serena-tl__card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 0 0 42px !important;
+  transform: none !important;
+}
+.serena-tl__num {
+  position: absolute !important;
+  left: 0 !important; top: 0 !important;
+  width: 28px !important; height: 28px !important;
+  box-shadow: 0 0 0 5px #2C211B !important;
+}
+.serena-tl__w { margin-top: 0 !important; }
+
+/* ============================================================
+   5 · INGREDIENTS — clean rows, dose bold on the right
+   ============================================================ */
+.serena-ing__grid { grid-template-columns: 1fr !important; gap: 10px !important; max-width: 720px; margin-left: auto; margin-right: auto; }
+.serena-ing__card { padding: 16px 18px !important; border-radius: 15px !important; box-shadow: var(--sm-shadow) !important; }
+.serena-ing__ic { display: none !important; }
+.serena-ing__row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.serena-ing__n { font-family: Marcellus, serif !important; font-size: 16.5px !important; color: var(--sm-ink) !important; line-height: 1.15; }
+.serena-ing__dose { flex: none; font-size: 11.5px; font-weight: 800; color: #9C5536; white-space: nowrap; }
+.serena-ing__tag { font-size: 9.5px !important; letter-spacing: .06em; text-transform: uppercase; color: var(--sm-muted) !important; font-style: italic; margin-top: 3px !important; }
+.serena-ing__d { font-size: 12.5px !important; line-height: 1.55 !important; color: var(--sm-body) !important; margin-top: 8px !important; }
+
+/* ============================================================
+   6 · REVIEWS — swipeable carousel + dots
+   ============================================================ */
+.serena-rev__card {
+  background: #FCF7F4 !important;
+  border: 1px solid #EAD8D2 !important;
+  border-radius: 16px !important;
+  box-shadow: var(--sm-shadow) !important;
+  position: relative;
+}
 .serena-rev__card::before {
   content: "\201C";
-  position: absolute;
-  top: 6px; right: 22px;
+  position: absolute; top: 4px; right: 18px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 84px; line-height: 1;
-  color: var(--sm-rose);
-  opacity: 0.22;
+  font-size: 76px; line-height: 1; color: var(--sm-rose); opacity: .2;
+}
+.serena-rev__q { color: #4A3829 !important; }
+@media (max-width: 749px) {
+  .serena-rev__grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px !important;
+    max-width: none !important;
+    margin: 0 -16px !important;
+    padding: 4px 16px 6px !important;
+    scrollbar-width: none;
+  }
+  .serena-rev__grid::-webkit-scrollbar { height: 0; display: none; }
+  .serena-rev__card { flex: 0 0 80% !important; scroll-snap-align: center; }
 }
 
-/* ---------- comparison ---------- */
+/* ============================================================
+   7 · COMPARISON (unchanged section — keep premium)
+   ============================================================ */
 .serena-cmp__col { border-radius: var(--sm-radius) !important; }
-.serena-cmp__col--con { background: #F4ECDF !important; border: 1px solid var(--sm-card-border) !important; box-shadow: var(--sm-shadow) !important; }
-.serena-cmp__col--pro { background: linear-gradient(165deg, #84915F 0%, #6E7B4F 100%) !important; box-shadow: 0 26px 56px -28px rgba(70,80,40,0.6) !important; }
-.serena-cmp__mark--pro { background: #EDF3DF !important; }
+.serena-cmp__col--con { background: #EFE7DA !important; border: 1px solid #DED2BE !important; box-shadow: var(--sm-shadow) !important; }
+.serena-cmp__col--pro { background: linear-gradient(165deg, #84915F 0%, #6E7B4F 100%) !important; box-shadow: 0 26px 56px -28px rgba(70,80,40,0.55) !important; }
+.serena-cmp__mark--pro { background: #EAF0DC !important; }
 
-/* ---------- FAQ ---------- */
+/* ============================================================
+   8 · FAQ (unchanged section — keep premium)
+   ============================================================ */
 .serena-faq__item {
   background: var(--sm-card) !important;
   border: 1px solid var(--sm-card-border) !important;
@@ -181,19 +223,32 @@
   transition: border-color .25s ease, box-shadow .25s ease, background .25s ease !important;
 }
 .serena-faq__item[open] {
-  border-color: rgba(189,85,50,0.30) !important;
+  border-color: rgba(189,85,50,0.28) !important;
   box-shadow: 0 20px 44px -28px rgba(60,33,20,.4) !important;
-  background: #FFFDF9 !important;
 }
 
-/* ---------- mobile-first comfort ---------- */
+/* ============================================================
+   9 · FINAL CTA — reassurance stacked vertically on mobile
+   ============================================================ */
 @media (max-width: 749px) {
-  .serena-sec .serena-h2 { font-size: 27px !important; line-height: 1.2 !important; }
-  .serena-problem .serena-h2 { font-size: 30px !important; }
-  .serena-sec .serena-lead { font-size: 15.5px !important; }
-  .serena-card__d, .serena-why__d, .serena-ing__d, .serena-ritual__d, .serena-tl__d { font-size: 14px !important; }
-  .serena-rev__q { font-size: 19px !important; }
-  .serena-benefits .serena-card, .serena-ritual__card { padding: 26px 22px !important; }
-  .serena-cmp__txt { font-size: 14.5px !important; }
-  .serena-faq__q { font-size: 15.5px !important; }
+  .serena-cta--final .serena-cta__reassure { flex-direction: column !important; align-items: center !important; gap: 11px !important; }
+}
+
+/* ---------- desktop-only hover lift on solid cards ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .serena-benefits .serena-card:hover,
+  .serena-ritual__card:hover,
+  .serena-ing__card:hover { transform: translateY(-3px) !important; box-shadow: var(--sm-shadow-hover) !important; }
+}
+
+/* ---------- mobile comfort sizing ---------- */
+@media (max-width: 749px) {
+  .serena-sec .serena-h2 { font-size: 24px !important; line-height: 1.18 !important; }
+  .serena-problem .serena-h2 { font-size: 27px !important; }
+  .serena-sec .serena-lead { font-size: 14.5px !important; }
+  .serena-benefits__grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  .serena-why__grid { padding: 4px 16px !important; }
+  .serena-cmp__txt { font-size: 13px !important; }
+  .serena-faq__q { font-size: 14px !important; }
+  .serena-rev__q { font-size: 18px !important; }
 }

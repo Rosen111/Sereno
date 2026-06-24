@@ -15,19 +15,11 @@
     <div class="serena-ing__grid">
       {%- for block in section.blocks -%}
         <div class="serena-ing__card" {{ block.shopify_attributes }}>
-          <div class="serena-ing__top">
-            <span class="serena-ing__ic">
-              {%- if block.settings.icon != blank -%}
-                {{ block.settings.icon | image_url: width: 64 | image_tag: loading: 'lazy', widths: '32, 64', alt: '' }}
-              {%- else -%}
-                <span class="serena-ing__ring"></span>
-              {%- endif -%}
-            </span>
-            <div>
-              {%- if block.settings.name != blank -%}<div class="serena-ing__n">{{ block.settings.name }}</div>{%- endif -%}
-              {%- if block.settings.tag != blank -%}<div class="serena-ing__tag">{{ block.settings.tag }}</div>{%- endif -%}
-            </div>
+          <div class="serena-ing__row">
+            {%- if block.settings.name != blank -%}<span class="serena-ing__n">{{ block.settings.name }}</span>{%- endif -%}
+            {%- if block.settings.dose != blank -%}<span class="serena-ing__dose">{{ block.settings.dose }}</span>{%- endif -%}
           </div>
+          {%- if block.settings.tag != blank -%}<div class="serena-ing__tag">{{ block.settings.tag }}</div>{%- endif -%}
           {%- if block.settings.text != blank -%}<div class="serena-ing__d">{{ block.settings.text }}</div>{%- endif -%}
         </div>
       {%- endfor -%}
@@ -87,9 +79,9 @@
       "type": "ingredient",
       "name": "Съставка",
       "settings": [
-        { "type": "image_picker", "id": "icon", "label": "Икона (по избор)" },
         { "type": "text", "id": "name", "label": "Име", "default": "Ашваганда KSM-66®" },
-        { "type": "text", "id": "tag", "label": "Латинско име / доза", "default": "Withania somnifera · 300 mg" },
+        { "type": "text", "id": "dose", "label": "Доза", "default": "300 mg" },
+        { "type": "text", "id": "tag", "label": "Латинско име", "default": "Withania somnifera" },
         { "type": "textarea", "id": "text", "label": "Описание", "default": "Адаптоген, който допринася за устойчивост при ежедневно напрежение." }
       ]
     }

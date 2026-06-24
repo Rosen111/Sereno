@@ -1,17 +1,25 @@
-{%- comment -%} Serena Meno · 1. Emotional problem section {%- endcomment -%}
+{%- comment -%} Serena Meno · 1. Emotional problem — photo hero with overlaid heading {%- endcomment -%}
 {% render 'serena-meno-fonts' %}
-{%- liquid
-  assign s = section.settings
--%}
+{%- assign s = section.settings -%}
 <div
   id="serena-problem-{{ section.id }}"
   class="serena-sec serena-problem"
-  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.hero_eyebrow_color }}; --hero-text: {{ s.hero_text_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
 >
-  <div class="serena-wrap serena-problem__grid">
-    <div class="serena-problem__text">
+  <div class="serena-problem__hero">
+    {%- if s.image != blank -%}
+      {{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 900, 1200, 1400, 1800', class: 'serena-problem__img' }}
+    {%- else -%}
+      <div class="serena-problem__ph" aria-hidden="true"></div>
+    {%- endif -%}
+    <div class="serena-problem__overlay" aria-hidden="true"></div>
+    <div class="serena-problem__hero-text">
       {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
       {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading | newline_to_br }}</h2>{%- endif -%}
+    </div>
+  </div>
+  <div class="serena-problem__body">
+    <div class="serena-wrap">
       {%- if s.paragraph != blank -%}<div class="serena-lead">{{ s.paragraph }}</div>{%- endif -%}
       {%- if section.blocks.size > 0 -%}
         <div class="serena-problem__chips">
@@ -21,43 +29,29 @@
         </div>
       {%- endif -%}
     </div>
-    <div class="serena-problem__media">
-      {%- if s.image != blank -%}
-        {{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 45vw', widths: '400, 600, 900, 1200', class: 'serena-problem__img' }}
-      {%- else -%}
-        <div class="serena-problem__ph" aria-hidden="true"></div>
-      {%- endif -%}
-    </div>
   </div>
 </div>
 
 {% style %}
-  #serena-problem-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-problem-{{ section.id }} { font-family: Mulish, sans-serif; }
+  #serena-problem-{{ section.id }} .serena-problem__hero { position: relative; width: 100%; height: 480px; overflow: hidden; }
+  #serena-problem-{{ section.id }} .serena-problem__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+  #serena-problem-{{ section.id }} .serena-problem__ph { position: absolute; inset: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #C58B86 0%, #A8746C 55%, #7C5A52 100%); }
+  #serena-problem-{{ section.id }} .serena-problem__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(44,33,27,0) 34%, rgba(44,33,27,0.55) 72%, rgba(44,33,27,0.82) 100%); }
+  #serena-problem-{{ section.id }} .serena-problem__hero-text { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 24px 34px; max-width: 1100px; margin: 0 auto; }
+  #serena-problem-{{ section.id }} .serena-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-problem-{{ section.id }} .serena-h2 { margin: 12px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 42px; line-height: 1.12; color: var(--hero-text); }
+  #serena-problem-{{ section.id }} .serena-problem__body { background: var(--bg); padding: var(--pt) 0 var(--pb); }
   #serena-problem-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-  #serena-problem-{{ section.id }} .serena-problem__grid { display: grid; grid-template-columns: 1fr 0.92fr; gap: 58px; align-items: center; }
-  #serena-problem-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
-  #serena-problem-{{ section.id }} .serena-h2 { margin: 16px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 42px; line-height: 1.12; color: #2C211B; }
-  #serena-problem-{{ section.id }} .serena-lead { margin: 22px 0 0; font-size: 16px; line-height: 1.75; color: #5A4836; max-width: 480px; }
-  #serena-problem-{{ section.id }} .serena-problem__chips { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
-  #serena-problem-{{ section.id }} .serena-chip { font-size: 13.5px; color: #7C5A52; background: #F4E6E2; border: 1px solid #ECD6D0; border-radius: 999px; padding: 9px 16px; }
-  #serena-problem-{{ section.id }} .serena-problem__media { border-radius: 18px; overflow: hidden; box-shadow: 0 26px 56px -28px rgba(60,33,20,.55); }
-  #serena-problem-{{ section.id }} .serena-problem__img { display: block; width: 100%; height: 520px; object-fit: cover; object-position: 50% 22%; }
-  #serena-problem-{{ section.id }} .serena-problem__ph { width: 100%; height: 520px; background: linear-gradient(135deg, #F4E6E2 0%, #FBF5EC 60%, #F3E8D8 100%); }
+  #serena-problem-{{ section.id }} .serena-lead { margin: 0; font-size: 16px; line-height: 1.78; color: #5A4836; max-width: 720px; }
+  #serena-problem-{{ section.id }} .serena-problem__chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+  #serena-problem-{{ section.id }} .serena-chip { font-size: 13.5px; color: #7C5A52; background: #F4E6E2; border: 1px solid #ECD6D0; border-radius: 999px; padding: 9px 16px; box-shadow: 0 2px 8px -5px rgba(60,33,20,.2); }
   @media (max-width: 749px) {
-    #serena-problem-{{ section.id }} { padding: 56px 0; }
-    #serena-problem-{{ section.id }} .serena-problem__grid { grid-template-columns: 1fr; gap: 32px; }
-    #serena-problem-{{ section.id }} .serena-h2 { font-size: 32px; }
-    #serena-problem-{{ section.id }} .serena-problem__img,
-    #serena-problem-{{ section.id }} .serena-problem__ph { height: 360px; }
-  }
-  /* polish */
-  #serena-problem-{{ section.id }} .serena-problem__media { border-radius: 22px; }
-  #serena-problem-{{ section.id }} .serena-problem__img,
-  #serena-problem-{{ section.id }} .serena-problem__ph { border-radius: 22px; }
-  #serena-problem-{{ section.id }} .serena-chip { box-shadow: 0 2px 8px -5px rgba(60,33,20,.2); }
-  @media (max-width: 749px) {
-    #serena-problem-{{ section.id }} .serena-lead { font-size: 15.5px; }
-    #serena-problem-{{ section.id }} .serena-h2 { font-size: 30px; }
+    #serena-problem-{{ section.id }} .serena-problem__hero { height: 340px; }
+    #serena-problem-{{ section.id }} .serena-problem__hero-text { padding: 0 22px 26px; }
+    #serena-problem-{{ section.id }} .serena-h2 { font-size: 27px; }
+    #serena-problem-{{ section.id }} .serena-problem__body { padding: 30px 0 36px; }
+    #serena-problem-{{ section.id }} .serena-lead { font-size: 14.5px; }
   }
 {% endstyle %}
 
@@ -67,15 +61,17 @@
   "tag": "section",
   "class": "serena-section",
   "settings": [
-    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#FBF5EC" },
-    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#C58B86" },
+    { "type": "image_picker", "id": "image", "label": "Снимка (фон на хедъра)" },
     { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "За теб" },
     { "type": "textarea", "id": "heading", "label": "Заглавие (нов ред = нов ред)", "default": "Не си полудяла.\nТялото ти просто\nсе променя." },
     { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>Перименопаузата и менопаузата често идват тихо — и объркващо. Дни, в които не се познаваш. Нощи без истинска почивка. Настроение, което се мени без видима причина. Това не е слабост и не е нещо, от което да се срамуваш. Това е естествен етап — и заслужаваш да го преминеш с грижа към себе си.</p>" },
-    { "type": "image_picker", "id": "image", "label": "Изображение" },
-    { "type": "header", "content": "Отстояние" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+    { "type": "header", "content": "Цветове" },
+    { "type": "color", "id": "bg_color", "label": "Фон (текстов блок)", "default": "#FBF5EC" },
+    { "type": "color", "id": "hero_eyebrow_color", "label": "Надтекст върху снимката", "default": "#F0C9B0" },
+    { "type": "color", "id": "hero_text_color", "label": "Заглавие върху снимката", "default": "#FCF6EC" },
+    { "type": "header", "content": "Отстояние (текстов блок)" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 48 }
   ],
   "blocks": [
     {
