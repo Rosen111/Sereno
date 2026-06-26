@@ -1,0 +1,95 @@
+{%- comment -%} Serena Meno · Защо работи — photo-card slider {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-whyworks-{{ section.id }}"
+  class="serena-sec serena-whyworks"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-whyworks__head">
+    {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+    {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+  </div>
+  <div class="serena-whyworks__slider">
+    {%- for block in section.blocks -%}
+      <div class="serena-whyworks__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 76vw, 25vw', widths: '300, 500, 700, 800', class: 'serena-whyworks__img' }}
+        {%- else -%}
+          <div class="serena-whyworks__img serena-whyworks__ph" aria-hidden="true"></div>
+        {%- endif -%}
+        <div class="serena-whyworks__ov" aria-hidden="true"></div>
+        <div class="serena-whyworks__body">
+          {%- if block.settings.icon_emoji != blank -%}<div class="serena-whyworks__ic">{{ block.settings.icon_emoji }}</div>{%- endif -%}
+          {%- if block.settings.title != blank -%}<h3 class="serena-whyworks__t">{{ block.settings.title }}</h3>{%- endif -%}
+          {%- if block.settings.text != blank -%}<p class="serena-whyworks__d">{{ block.settings.text }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  {%- if s.hint != blank -%}<div class="serena-whyworks__hint">{{ s.hint }}</div>{%- endif -%}
+</div>
+
+{% style %}
+  #serena-whyworks-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__head { text-align: center; max-width: 640px; margin: 0 auto 20px; padding: 0 24px; }
+  #serena-whyworks-{{ section.id }} .serena-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-whyworks-{{ section.id }} .serena-h2 { margin: 11px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 30px; line-height: 1.18; color: #2C211B; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__slider { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 4px 24px 6px; scrollbar-width: none; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__slider::-webkit-scrollbar { height: 0; display: none; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__card { position: relative; flex: 0 0 76%; scroll-snap-align: center; border-radius: 20px; overflow: hidden; height: 360px; box-shadow: 0 18px 40px -22px rgba(60,33,20,.5); }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__ph { background: linear-gradient(160deg, #C58B86 0%, #A8746C 55%, #7C5A52 100%); }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__ov { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,20,14,.05) 32%, rgba(28,20,14,.55) 60%, rgba(28,20,14,.9) 100%); }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__body { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 20px 22px; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__ic { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(244,231,214,.6); display: flex; align-items: center; justify-content: center; font-size: 15px; color: #F4E7D6; margin-bottom: 12px; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__t { margin: 0; font-family: Marcellus, serif; font-weight: 400; font-size: 23px; color: #FCF6EC; line-height: 1.1; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__d { margin: 9px 0 0; font-size: 13px; line-height: 1.5; color: #EAD9C7; }
+  #serena-whyworks-{{ section.id }} .serena-whyworks__hint { text-align: center; margin-top: 14px; font-size: 10.5px; letter-spacing: .04em; color: #A8927C; }
+  @media (min-width: 750px) {
+    #serena-whyworks-{{ section.id }} .serena-whyworks__slider { gap: 18px; padding-left: max(24px, calc((100% - 1100px) / 2)); padding-right: max(24px, calc((100% - 1100px) / 2)); overflow-x: visible; flex-wrap: wrap; }
+    #serena-whyworks-{{ section.id }} .serena-whyworks__card { flex: 1 1 calc(25% - 14px); height: 380px; }
+    #serena-whyworks-{{ section.id }} .serena-whyworks__hint { display: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Защо работи",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#FBF5EC" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#B06A45" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Защо работи" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Подкрепа, която усещаш в ежедневието" },
+    { "type": "text", "id": "hint", "label": "Подсказка (мобилно)", "default": "Плъзни, за да разгледаш →" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Карта",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Снимка" },
+        { "type": "text", "id": "icon_emoji", "label": "Икона (емоджи/символ)", "default": "☾" },
+        { "type": "text", "id": "title", "label": "Заглавие", "default": "По-спокоен сън" },
+        { "type": "textarea", "id": "text", "label": "Описание", "default": "Магнезий и витамин B6 допринасят за нормалната функция на нервната система и по-спокойна вечер." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Защо работи",
+      "blocks": [
+        { "type": "card", "settings": { "icon_emoji": "☾", "title": "По-спокоен сън", "text": "Магнезий и витамин B6 допринасят за нормалната функция на нервната система и по-спокойна вечер." } },
+        { "type": "card", "settings": { "icon_emoji": "♡", "title": "Баланс в настроението", "text": "Шафран Affron™ и витамини от група B подкрепят по-стабилно и ведро ежедневие." } },
+        { "type": "card", "settings": { "icon_emoji": "✦", "title": "По-малко стрес и напрежение", "text": "Ашваганда KSM-66® и Serenzo™ подпомагат усещането за спокойствие при ежедневно напрежение." } },
+        { "type": "card", "settings": { "icon_emoji": "❀", "title": "Подкрепа в менопаузата", "text": "Градински чай и червена детелина са подбрани за подкрепа в периода на менопауза." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

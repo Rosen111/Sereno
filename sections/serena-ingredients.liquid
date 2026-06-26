@@ -1,60 +1,85 @@
-{%- comment -%} Serena Meno · 7. Ingredients / formula {%- endcomment -%}
+{%- comment -%} Serena Meno · 7. Ingredients — photo slider with doses {%- endcomment -%}
 {% render 'serena-meno-fonts' %}
 {%- assign s = section.settings -%}
 <div
   id="serena-ing-{{ section.id }}"
   class="serena-sec serena-ing"
-  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --ring-bg: {{ s.ring_bg }}; --ring: {{ s.ring_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
 >
-  <div class="serena-wrap">
-    <div class="serena-head">
-      {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
-      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
-      {%- if s.paragraph != blank -%}<p class="serena-sub">{{ s.paragraph }}</p>{%- endif -%}
-    </div>
-    <div class="serena-ing__grid">
-      {%- for block in section.blocks -%}
-        <div class="serena-ing__card" {{ block.shopify_attributes }}>
-          <div class="serena-ing__row">
-            {%- if block.settings.name != blank -%}<span class="serena-ing__n">{{ block.settings.name }}</span>{%- endif -%}
-            {%- if block.settings.dose != blank -%}<span class="serena-ing__dose">{{ block.settings.dose }}</span>{%- endif -%}
-          </div>
-          {%- if block.settings.tag != blank -%}<div class="serena-ing__tag">{{ block.settings.tag }}</div>{%- endif -%}
-          {%- if block.settings.text != blank -%}<div class="serena-ing__d">{{ block.settings.text }}</div>{%- endif -%}
+  <div class="serena-ing__head">
+    {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+    {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    {%- if s.paragraph != blank -%}<p class="serena-ing__sub">{{ s.paragraph }}</p>{%- endif -%}
+  </div>
+  <div class="serena-ing__slider" id="serena-ing-scroll-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="serena-ing__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 62vw, 230px', widths: '240, 400, 600', class: 'serena-ing__img' }}
+        {%- else -%}
+          <div class="serena-ing__img serena-ing__ph" aria-hidden="true"><span>{{ block.settings.name }}</span></div>
+        {%- endif -%}
+        <div class="serena-ing__cardbody">
+          {%- if block.settings.name != blank -%}<div class="serena-ing__n">{{ block.settings.name }}</div>{%- endif -%}
+          {%- if block.settings.dose != blank -%}<span class="serena-ing__dose">{{ block.settings.dose }}</span>{%- endif -%}
+          {%- if block.settings.text != blank -%}<p class="serena-ing__d">{{ block.settings.text }}</p>{%- endif -%}
         </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  {%- if section.blocks.size > 1 -%}
+    <div class="serena-ing__dots">
+      {%- for block in section.blocks -%}
+        <span class="serena-ing__dot{% if forloop.first %} is-active{% endif %}"></span>
       {%- endfor -%}
     </div>
-  </div>
+  {%- endif -%}
 </div>
+
+<script>
+  (function () {
+    var sl = document.getElementById('serena-ing-scroll-{{ section.id }}');
+    var wrap = document.getElementById('serena-ing-{{ section.id }}');
+    if (!sl || !wrap) return;
+    var dots = wrap.querySelectorAll('.serena-ing__dot');
+    if (!dots.length) return;
+    function upd() {
+      var first = sl.children[0];
+      if (!first) return;
+      var step = first.offsetWidth + 13;
+      var i = Math.round(sl.scrollLeft / step);
+      if (i < 0) i = 0; if (i > dots.length - 1) i = dots.length - 1;
+      for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('is-active', d === i);
+    }
+    sl.addEventListener('scroll', function () { window.requestAnimationFrame(upd); }, { passive: true });
+  })();
+</script>
 
 {% style %}
   #serena-ing-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
-  #serena-ing-{{ section.id }} .serena-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-  #serena-ing-{{ section.id }} .serena-head { text-align: center; max-width: 680px; margin: 0 auto 46px; }
-  #serena-ing-{{ section.id }} .serena-eyebrow { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
-  #serena-ing-{{ section.id }} .serena-h2 { margin: 14px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 34px; line-height: 1.18; color: #2C211B; }
-  #serena-ing-{{ section.id }} .serena-sub { margin: 14px auto 0; font-size: 15px; line-height: 1.65; color: #7C6957; max-width: 560px; }
-  #serena-ing-{{ section.id }} .serena-ing__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  #serena-ing-{{ section.id }} .serena-ing__card { background: #FFFDF8; border: 1px solid #ECDFCB; border-radius: 18px; padding: 28px 26px; }
-  #serena-ing-{{ section.id }} .serena-ing__top { display: flex; align-items: center; gap: 14px; }
-  #serena-ing-{{ section.id }} .serena-ing__ic { flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--ring-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  #serena-ing-{{ section.id }} .serena-ing__ic img { width: 22px; height: 22px; object-fit: contain; }
-  #serena-ing-{{ section.id }} .serena-ing__ring { width: 16px; height: 16px; border: 2px solid var(--ring); border-radius: 50%; display: block; }
-  #serena-ing-{{ section.id }} .serena-ing__n { font-family: Marcellus, serif; font-size: 19px; color: #2C211B; line-height: 1.1; }
-  #serena-ing-{{ section.id }} .serena-ing__tag { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: #A8927C; font-style: italic; margin-top: 4px; }
-  #serena-ing-{{ section.id }} .serena-ing__d { margin-top: 16px; font-size: 13.5px; line-height: 1.6; color: #6B5B4E; }
-  @media (max-width: 990px) { #serena-ing-{{ section.id }} .serena-ing__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 749px) {
-    #serena-ing-{{ section.id }} { padding: 56px 0; }
-    #serena-ing-{{ section.id }} .serena-head { margin-bottom: 30px; }
-    #serena-ing-{{ section.id }} .serena-h2 { font-size: 28px; }
-    #serena-ing-{{ section.id }} .serena-ing__grid { grid-template-columns: 1fr; gap: 14px; }
+  #serena-ing-{{ section.id }} .serena-ing__head { text-align: center; max-width: 640px; margin: 0 auto 6px; padding: 0 24px; }
+  #serena-ing-{{ section.id }} .serena-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-ing-{{ section.id }} .serena-h2 { margin: 11px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 30px; line-height: 1.18; color: #2C211B; }
+  #serena-ing-{{ section.id }} .serena-ing__sub { margin: 10px auto 0; font-size: 13.5px; line-height: 1.55; color: #7C6957; max-width: 360px; }
+  #serena-ing-{{ section.id }} .serena-ing__slider { display: flex; gap: 13px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 18px 24px 6px; scrollbar-width: none; }
+  #serena-ing-{{ section.id }} .serena-ing__slider::-webkit-scrollbar { height: 0; display: none; }
+  #serena-ing-{{ section.id }} .serena-ing__card { flex: 0 0 62%; scroll-snap-align: center; background: #FBF5EC; border: 1px solid #E7D8C4; border-radius: 18px; overflow: hidden; box-shadow: 0 14px 32px -22px rgba(60,33,20,.5); }
+  #serena-ing-{{ section.id }} .serena-ing__img { display: block; width: 100%; height: 124px; object-fit: cover; }
+  #serena-ing-{{ section.id }} .serena-ing__ph { display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; background: linear-gradient(150deg, #EFE3D2, #E7D8C4); }
+  #serena-ing-{{ section.id }} .serena-ing__ph span { font-family: Marcellus, serif; font-size: 14px; color: #9C7B5E; line-height: 1.2; }
+  #serena-ing-{{ section.id }} .serena-ing__cardbody { padding: 13px 15px 16px; }
+  #serena-ing-{{ section.id }} .serena-ing__n { font-family: Marcellus, serif; font-size: 16px; color: #2C211B; line-height: 1.12; }
+  #serena-ing-{{ section.id }} .serena-ing__dose { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #9C5536; background: #F1E2D0; border-radius: 999px; padding: 3px 10px; }
+  #serena-ing-{{ section.id }} .serena-ing__d { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: #6B5B4E; }
+  #serena-ing-{{ section.id }} .serena-ing__dots { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 16px; padding: 0 40px; }
+  #serena-ing-{{ section.id }} .serena-ing__dot { width: 6px; height: 6px; border-radius: 999px; background: #D6C0A8; transition: all .2s ease; }
+  #serena-ing-{{ section.id }} .serena-ing__dot.is-active { width: 18px; background: #BD5532; }
+  @media (min-width: 750px) {
+    #serena-ing-{{ section.id }} .serena-h2 { font-size: 34px; }
+    #serena-ing-{{ section.id }} .serena-ing__slider { padding-left: max(24px, calc((100% - 1100px) / 2)); padding-right: max(24px, calc((100% - 1100px) / 2)); }
+    #serena-ing-{{ section.id }} .serena-ing__card { flex: 0 0 232px; }
+    #serena-ing-{{ section.id }} .serena-ing__img { height: 140px; }
   }
-  /* polish */
-  #serena-ing-{{ section.id }} .serena-ing__card { box-shadow: 0 14px 34px -26px rgba(60,33,20,.32); transition: transform .25s ease, box-shadow .25s ease; }
-  @media (hover: hover) { #serena-ing-{{ section.id }} .serena-ing__card:hover { transform: translateY(-3px); box-shadow: 0 24px 46px -26px rgba(60,33,20,.4); } }
-  #serena-ing-{{ section.id }} .serena-ing__ring { width: 14px; height: 14px; background: var(--ring); border: none; box-shadow: 0 0 0 5px rgba(116,128,95,.16); }
-  @media (max-width: 749px) { #serena-ing-{{ section.id }} .serena-ing__d { font-size: 13.5px; } }
 {% endstyle %}
 
 {% schema %}
@@ -63,26 +88,25 @@
   "tag": "section",
   "class": "serena-section",
   "settings": [
-    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#FBF5EC" },
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#EFE3D2" },
     { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#B06A45" },
-    { "type": "color", "id": "ring_bg", "label": "Фон на иконата", "default": "#EAEADD" },
-    { "type": "color", "id": "ring_color", "label": "Цвят на иконата", "default": "#74805F" },
     { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Формулата" },
-    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Внимателно подбрани съставки, създадени да подкрепят" },
-    { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>Всяка съставка е избрана заради ролята си в подкрепата на жените през перименопауза и менопауза.</p>" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Внимателно подбрани съставки" },
+    { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>12 активни съставки в премислени дози — плъзни, за да разгледаш всяка.</p>" },
     { "type": "header", "content": "Отстояние" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 84 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 84 }
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 56 }
   ],
   "blocks": [
     {
       "type": "ingredient",
       "name": "Съставка",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Снимка" },
         { "type": "text", "id": "name", "label": "Име", "default": "Ашваганда KSM-66®" },
         { "type": "text", "id": "dose", "label": "Доза", "default": "300 mg" },
-        { "type": "text", "id": "tag", "label": "Латинско име", "default": "Withania somnifera" },
-        { "type": "textarea", "id": "text", "label": "Описание", "default": "Адаптоген, който допринася за устойчивост при ежедневно напрежение." }
+        { "type": "text", "id": "tag", "label": "Латинско име (по избор)", "default": "" },
+        { "type": "textarea", "id": "text", "label": "Описание", "default": "Адаптоген за устойчивост при ежедневно напрежение." }
       ]
     }
   ],
@@ -90,12 +114,18 @@
     {
       "name": "Serena · Съставки",
       "blocks": [
-        { "type": "ingredient", "settings": { "name": "Ашваганда KSM-66®", "tag": "Withania somnifera · 300 mg", "text": "Адаптоген, който допринася за устойчивост при ежедневно напрежение." } },
-        { "type": "ingredient", "settings": { "name": "Шафран affron®", "tag": "Crocus sativus · 30 mg", "text": "Подбран да подпомага усещането за спокойствие и баланс на настроението." } },
-        { "type": "ingredient", "settings": { "name": "Червена детелина", "tag": "Trifolium pratense · 100 mg", "text": "Растителен екстракт, традиционно свързван с подкрепа за жени в периода на менопауза." } },
-        { "type": "ingredient", "settings": { "name": "Магнезий бисглицинат", "tag": "Magnesium · 100 mg", "text": "Допринася за нормалната функция на нервната система и за намаляване на умората." } },
-        { "type": "ingredient", "settings": { "name": "Витамин D3", "tag": "Vitamin D3 · 2000 IU", "text": "Допринася за поддържане на нормални кости и нормална имунна функция." } },
-        { "type": "ingredient", "settings": { "name": "Витамин B6 (P-5-P)", "tag": "Vitamin B6 · 5 mg", "text": "Допринася за регулиране на хормоналната активност в организма." } }
+        { "type": "ingredient", "settings": { "name": "Ашваганда KSM-66®", "dose": "300 mg", "text": "Адаптоген за устойчивост при ежедневно напрежение." } },
+        { "type": "ingredient", "settings": { "name": "Шафран Affron®", "dose": "30 mg", "text": "Подбран да подпомага спокойствие и баланс на настроението." } },
+        { "type": "ingredient", "settings": { "name": "Градински чай", "dose": "300 mg", "text": "Традиционно свързан с подкрепа в периода на менопауза." } },
+        { "type": "ingredient", "settings": { "name": "Serenzo™", "dose": "30 mg", "text": "Цитрусов екстракт за усещане за спокойствие." } },
+        { "type": "ingredient", "settings": { "name": "Червена детелина", "dose": "100 mg", "text": "Растителен екстракт за подкрепа в менопаузата." } },
+        { "type": "ingredient", "settings": { "name": "Джинджифил", "dose": "50 mg", "text": "Подпомага храносмилателния комфорт." } },
+        { "type": "ingredient", "settings": { "name": "Магнезий бисглицинат", "dose": "100 mg", "text": "Допринася за нервната система и за намаляване на умората." } },
+        { "type": "ingredient", "settings": { "name": "Витамин D3", "dose": "50 mcg", "text": "Допринася за нормални кости и имунна функция." } },
+        { "type": "ingredient", "settings": { "name": "Витамин K2 MK-7", "dose": "75 mcg", "text": "Допринася за поддържане на нормални кости." } },
+        { "type": "ingredient", "settings": { "name": "Цинк", "dose": "10 mg", "text": "Принос към коса, кожа, нокти и нормален метаболизъм." } },
+        { "type": "ingredient", "settings": { "name": "Витамин B6", "dose": "5 mg", "text": "Допринася за регулиране на хормоналната активност." } },
+        { "type": "ingredient", "settings": { "name": "Витамин B12", "dose": "25 mcg", "text": "Допринася за намаляване на умората и отпадналостта." } }
       ]
     }
   ]
