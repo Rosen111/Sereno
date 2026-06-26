@@ -1,0 +1,82 @@
+{%- comment -%} Serena Meno · Stats — "Дали наистина работи?" (editable placeholder data) {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- assign s = section.settings -%}
+<div
+  id="serena-stats-{{ section.id }}"
+  class="serena-sec serena-mstats"
+  style="--bg: {{ s.bg_color }}; --num: {{ s.number_color }}; --heading: {{ s.heading_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    <div class="serena-mstats__head">
+      {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.paragraph != blank -%}<div class="serena-mstats__sub">{{ s.paragraph }}</div>{%- endif -%}
+    </div>
+    <div class="serena-mstats__grid">
+      {%- for block in section.blocks -%}
+        <div class="serena-mstats__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.value != blank -%}<div class="serena-mstats__v">{{ block.settings.value }}</div>{%- endif -%}
+          {%- if block.settings.label != blank -%}<div class="serena-mstats__l">{{ block.settings.label }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if s.disclaimer != blank -%}<div class="serena-mstats__disc">{{ s.disclaimer }}</div>{%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  #serena-stats-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-stats-{{ section.id }} .serena-wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  #serena-stats-{{ section.id }} .serena-mstats__head { text-align: center; max-width: 520px; margin: 0 auto 22px; }
+  #serena-stats-{{ section.id }} .serena-h2 { margin: 0; font-family: Marcellus, serif; font-weight: 400; font-size: 26px; line-height: 1.16; color: var(--heading); }
+  #serena-stats-{{ section.id }} .serena-mstats__sub { margin: 12px auto 0; font-size: 13px; line-height: 1.6; color: #6F6353; }
+  #serena-stats-{{ section.id }} .serena-mstats__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 14px; }
+  #serena-stats-{{ section.id }} .serena-mstats__item { text-align: center; }
+  #serena-stats-{{ section.id }} .serena-mstats__v { font-family: Marcellus, serif; font-size: 44px; line-height: 1; color: var(--num); }
+  #serena-stats-{{ section.id }} .serena-mstats__l { font-size: 12px; line-height: 1.45; color: #5A4836; margin-top: 9px; }
+  #serena-stats-{{ section.id }} .serena-mstats__disc { text-align: center; margin-top: 24px; font-size: 10px; color: #A2917C; line-height: 1.5; }
+  @media (min-width: 750px) {
+    #serena-stats-{{ section.id }} .serena-h2 { font-size: 30px; }
+    #serena-stats-{{ section.id }} .serena-mstats__grid { grid-template-columns: repeat(4, 1fr); }
+    #serena-stats-{{ section.id }} .serena-mstats__v { font-size: 48px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Статистики",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F3EEDD" },
+    { "type": "color", "id": "heading_color", "label": "Цвят на заглавието", "default": "#5C6A48" },
+    { "type": "color", "id": "number_color", "label": "Цвят на числата", "default": "#74805F" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Дали наистина работи?" },
+    { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>Попитахме жени, които приемат Serena Meno редовно. Ето какво споделят след <strong>3 месеца</strong> прием.</p>" },
+    { "type": "textarea", "id": "disclaimer", "label": "Дисклеймър", "default": "* Примерни данни от анкета сред клиенти — заменят се с реални резултати. Индивидуално е." },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Статистика",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Число", "default": "87%" },
+        { "type": "textarea", "id": "label", "label": "Описание", "default": "съобщават за по-балансирано настроение*" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Статистики",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "9 от 10", "label": "усещат по-спокоен сън след редовен прием*" } },
+        { "type": "stat", "settings": { "value": "87%", "label": "съобщават за по-балансирано настроение*" } },
+        { "type": "stat", "settings": { "value": "92%", "label": "усещат повече ежедневен комфорт*" } },
+        { "type": "stat", "settings": { "value": "90%", "label": "биха препоръчали на приятелка*" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

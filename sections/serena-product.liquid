@@ -1,0 +1,111 @@
+{%- comment -%} Serena Meno · Продуктът — intro + image + badges + CTA {%- endcomment -%}
+{% render 'serena-meno-fonts' %}
+{%- liquid
+  assign s = section.settings
+  assign link = s.button_link
+  if link == blank
+    assign link = '#serena-product-form'
+  endif
+-%}
+<div
+  id="serena-product-{{ section.id }}"
+  class="serena-sec serena-product"
+  style="--bg: {{ s.bg_color }}; --eyebrow: {{ s.eyebrow_color }}; --accent: {{ s.accent_color }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="serena-wrap">
+    {%- if s.eyebrow != blank -%}<div class="serena-eyebrow">{{ s.eyebrow }}</div>{%- endif -%}
+    {%- if s.heading != blank -%}<h2 class="serena-h2">{{ s.heading }}</h2>{%- endif -%}
+    {%- if s.paragraph != blank -%}<div class="serena-product__lead">{{ s.paragraph }}</div>{%- endif -%}
+    <div class="serena-product__media">
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 92vw, 1100px', widths: '600, 900, 1200', class: 'serena-product__img' }}
+      {%- else -%}
+        <div class="serena-product__img serena-product__ph" aria-hidden="true"></div>
+      {%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="serena-product__badges">
+        {%- for block in section.blocks -%}
+          <div class="serena-product__badge{% if block.settings.wide %} is-wide{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon_emoji != blank -%}<span class="serena-product__bic">{{ block.settings.icon_emoji }}</span>{%- endif -%}
+            <span class="serena-product__bt">{{ block.settings.title }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if s.button_label != blank -%}<a class="serena-product__btn" href="{{ link }}">{{ s.button_label }}</a>{%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  #serena-product-{{ section.id }} { background: var(--bg); padding: var(--pt) 0 var(--pb); font-family: Mulish, sans-serif; }
+  #serena-product-{{ section.id }} .serena-wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  #serena-product-{{ section.id }} .serena-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); font-weight: 800; }
+  #serena-product-{{ section.id }} .serena-h2 { margin: 11px 0 0; font-family: Marcellus, serif; font-weight: 400; font-size: 30px; line-height: 1.15; color: #2C211B; }
+  #serena-product-{{ section.id }} .serena-product__lead { margin: 12px 0 0; font-size: 14.5px; line-height: 1.65; color: #7C5A52; }
+  #serena-product-{{ section.id }} .serena-product__media { margin-top: 18px; border-radius: 20px; overflow: hidden; box-shadow: 0 22px 48px -26px rgba(60,33,20,.5); }
+  #serena-product-{{ section.id }} .serena-product__img { display: block; width: 100%; height: 320px; object-fit: cover; object-position: 50% 20%; }
+  #serena-product-{{ section.id }} .serena-product__ph { background: linear-gradient(150deg, #F4E6E2, #E7D8C4); }
+  #serena-product-{{ section.id }} .serena-product__badges { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  #serena-product-{{ section.id }} .serena-product__badge { display: flex; align-items: center; gap: 10px; background: #FFFCFA; border: 1px solid #EFDDD7; border-radius: 13px; padding: 12px 13px; }
+  #serena-product-{{ section.id }} .serena-product__badge.is-wide { grid-column: 1 / -1; }
+  #serena-product-{{ section.id }} .serena-product__bic { flex: none; font-size: 15px; color: var(--accent); line-height: 1; }
+  #serena-product-{{ section.id }} .serena-product__bt { font-size: 12px; font-weight: 700; color: #3A2A1F; line-height: 1.25; }
+  #serena-product-{{ section.id }} .serena-product__btn { display: block; text-align: center; margin-top: 18px; background: var(--accent); color: #FBF6EE; text-decoration: none; font-weight: 800; font-size: 15.5px; padding: 16px; border-radius: 14px; box-shadow: 0 14px 28px -12px rgba(189,85,50,.6); transition: filter .2s ease; }
+  #serena-product-{{ section.id }} .serena-product__btn:hover { filter: brightness(0.94); }
+  @media (min-width: 750px) {
+    #serena-product-{{ section.id }} .serena-h2 { font-size: 36px; }
+    #serena-product-{{ section.id }} .serena-product__img { height: 420px; }
+    #serena-product-{{ section.id }} .serena-product__badges { grid-template-columns: repeat(4, 1fr); }
+    #serena-product-{{ section.id }} .serena-product__badge.is-wide { grid-column: auto; }
+    #serena-product-{{ section.id }} .serena-product__btn { max-width: 360px; margin-left: auto; margin-right: auto; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Serena · Продуктът",
+  "tag": "section",
+  "class": "serena-section",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Фон", "default": "#F4E6E2" },
+    { "type": "color", "id": "eyebrow_color", "label": "Цвят на надтекста", "default": "#C07A6A" },
+    { "type": "color", "id": "accent_color", "label": "Акцент (бутон/икони)", "default": "#BD5532" },
+    { "type": "text", "id": "eyebrow", "label": "Надтекст", "default": "Продуктът" },
+    { "type": "text", "id": "heading", "label": "Заглавие", "default": "Serena Meno — ежедневна подкрепа без хормони" },
+    { "type": "richtext", "id": "paragraph", "label": "Текст", "default": "<p>Нежна дневна формула, създадена за периода на перименопауза и менопауза — с растителни екстракти, витамини и минерали за ежедневна подкрепа.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Снимка" },
+    { "type": "text", "id": "button_label", "label": "Текст на бутона", "default": "Виж продукта" },
+    { "type": "url", "id": "button_link", "label": "Линк на бутона (празно = към продукта)" },
+    { "type": "header", "content": "Отстояние" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отгоре", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Отстояние отдолу", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Бадж",
+      "settings": [
+        { "type": "text", "id": "icon_emoji", "label": "Икона (символ)", "default": "◇" },
+        { "type": "text", "id": "title", "label": "Текст", "default": "Веган HPMC капсули" },
+        { "type": "checkbox", "id": "wide", "label": "Цяла ширина (мобилно)", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Serena · Продуктът",
+      "blocks": [
+        { "type": "badge", "settings": { "icon_emoji": "◷", "title": "2 капсули дневно" } },
+        { "type": "badge", "settings": { "icon_emoji": "◉", "title": "60 капсули / 30 дни" } },
+        { "type": "badge", "settings": { "icon_emoji": "✕", "title": "Без хормони · Без HRT" } },
+        { "type": "badge", "settings": { "icon_emoji": "❋", "title": "Веган HPMC капсули" } },
+        { "type": "badge", "settings": { "icon_emoji": "◇", "title": "Без глутен" } },
+        { "type": "badge", "settings": { "icon_emoji": "◇", "title": "Без лактоза" } },
+        { "type": "badge", "settings": { "icon_emoji": "◇", "title": "Без добавена захар" } },
+        { "type": "badge", "settings": { "icon_emoji": "✚", "title": "Част от 90-дневна wellness програма", "wide": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}
