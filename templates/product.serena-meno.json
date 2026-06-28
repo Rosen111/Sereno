@@ -179,7 +179,7 @@
                 "horizontal_desktop_padding": 15,
                 "vertical_mobile_padding": 12,
                 "horizontal_mobile_padding": 12,
-                "text_1": "Text with icon",
+                "text_1": "Подкрепа при горещи вълни и топлинен дискомфорт",
                 "icon_1": "check_circle",
                 "filled_icon_1": false,
                 "text_2": "",
@@ -239,7 +239,7 @@
                 "horizontal_desktop_padding": 15,
                 "vertical_mobile_padding": 12,
                 "horizontal_mobile_padding": 12,
-                "text_1": "Text with icon",
+                "text_1": "За по-спокоен сън и емоционален баланс",
                 "icon_1": "check_circle",
                 "filled_icon_1": false,
                 "text_2": "",
@@ -299,7 +299,7 @@
                 "horizontal_desktop_padding": 15,
                 "vertical_mobile_padding": 12,
                 "horizontal_mobile_padding": 12,
-                "text_1": "Text with icon",
+                "text_1": "С витамини и минерали за енергия, кости, кожа и коса",
                 "icon_1": "check_circle",
                 "filled_icon_1": false,
                 "text_2": "",
@@ -359,7 +359,7 @@
                 "horizontal_desktop_padding": 15,
                 "vertical_mobile_padding": 12,
                 "horizontal_mobile_padding": 12,
-                "text_1": "Text with icon",
+                "text_1": "Без хормони, без HRT, веган капсули",
                 "icon_1": "check_circle",
                 "filled_icon_1": false,
                 "text_2": "",
@@ -1057,23 +1057,6 @@
         "padding_bottom": 84
       }
     },
-    "cta_mid": {
-      "type": "serena-cta",
-      "settings": {
-        "layout": "band",
-        "bg_color": "#efe3d2",
-        "heading_color": "#2c211b",
-        "accent_color": "#bd5532",
-        "accent_text_color": "#fbf6ee",
-        "eyebrow": "Serena Meno",
-        "heading": "Когато се почувстваш готова, ние сме тук.",
-        "text": "<p>Създадена като спокойна ежедневна рутина за периода на промяна.</p>",
-        "button_label": "Избери своя курс",
-        "button_link": "#serena-product-form",
-        "padding_top": 44,
-        "padding_bottom": 44
-      }
-    },
     "product": {
       "type": "serena-product",
       "blocks": {
@@ -1212,7 +1195,7 @@
         "t4"
       ],
       "settings": {
-        "bg_color": "#2c211b",
+        "bg_color": "#F4ECDD",
         "eyebrow_color": "#b06a45",
         "heading_color": "#f4ecdd",
         "eyebrow": "Постоянството има значение",
@@ -1763,7 +1746,6 @@
     "problem",
     "benefits",
     "why",
-    "cta_mid",
     "product",
     "timeline",
     "why_works",
