@@ -127,36 +127,7 @@
 .serena-ritual__t { text-align: left !important; margin-top: 0 !important; font-size: 14.5px !important; }
 .serena-ritual__d { text-align: left !important; font-size: 12.5px !important; }
 
-/* ============================================================
-   4 · TIMELINE — vertical line + dots (dark)
-   ============================================================ */
-.serena-tl__grid {
-  grid-template-columns: 1fr !important;
-  gap: 22px !important;
-  max-width: 540px; margin-left: auto; margin-right: auto;
-  position: relative;
-}
-.serena-tl__line {
-  left: 13px !important; right: auto !important;
-  top: 6px !important; bottom: 6px !important;
-  width: 2px !important; height: auto !important;
-  display: block !important;
-}
-.serena-tl__card {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 0 0 42px !important;
-  transform: none !important;
-}
-.serena-tl__num {
-  position: absolute !important;
-  left: 0 !important; top: 0 !important;
-  width: 28px !important; height: 28px !important;
-  box-shadow: 0 0 0 5px #2C211B !important;
-}
-.serena-tl__w { margin-top: 0 !important; }
+/* Timeline section is self-contained (light card timeline) in serena-meno-timeline.liquid */
 
 /* Ingredients section is self-contained (photo slider) in serena-ingredients.liquid */
 
